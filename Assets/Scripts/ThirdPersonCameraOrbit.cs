@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class ThirdPersonCameraCollision : MonoBehaviour
 {
-    public Transform target;       // объект, за которым следим
-    public float distance = 5f;    // стандартная дистанция
-    public float minDistance = 1f; // минимальная дистанция камеры
-    public float maxDistance = 10f; // максимальная дистанция камеры
-    public float zoomSpeed = 2f;   // скорость приближения/отдаления
-    public float xSpeed = 120f;    // скорость вращения по горизонтали
-    public float ySpeed = 120f;    // скорость вращения по вертикали
-    public float yMinLimit = -20f; // минимальный угол по вертикали
-    public float yMaxLimit = 80f;  // максимальный угол по вертикали
+    public Transform target;
+    public float distance = 5f;
+    public float minDistance = 1f;
+    public float maxDistance = 10f;
+    public float zoomSpeed = 2f;
+    public float xSpeed = 120f;
+    public float ySpeed = 120f;
+    public float yMinLimit = -20f;
+    public float yMaxLimit = 80f;
+
+    public LayerMask collisionLayers;
 
     private float currentDistance;
     private float rotationYAxis = 0f;
@@ -33,7 +35,6 @@ public class ThirdPersonCameraCollision : MonoBehaviour
     {
         if (target)
         {
-            // вращение камеры мышкой
             velocityX += xSpeed * Input.GetAxis("Mouse X") * 0.02f;
             velocityY += ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
 
@@ -43,12 +44,20 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
             Quaternion rotation = Quaternion.Euler(rotationXAxis, rotationYAxis, 0);
 
-            // приближение/отдаление колесиком мыши
             float scroll = Input.GetAxis("Mouse ScrollWheel");
             currentDistance = Mathf.Clamp(currentDistance - scroll * zoomSpeed, minDistance, maxDistance);
 
+            RaycastHit hit;
+            Vector3 desiredPosition = target.position - (rotation * Vector3.forward * currentDistance);
+            if (Physics.Linecast(target.position, desiredPosition, out hit, collisionLayers))
+            {
+                currentDistance = Mathf.Clamp(hit.distance, minDistance, currentDistance);
+            }
 
-            // плавное уменьшение скорости вращения
+            transform.position = target.position - (rotation * Vector3.forward * currentDistance);
+            transform.rotation = rotation;
+
+
             velocityX = Mathf.Lerp(velocityX, 0, 0.2f);
             velocityY = Mathf.Lerp(velocityY, 0, 0.2f);
         }
