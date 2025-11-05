@@ -1,10 +1,15 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Настройки")]
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float turnSpeed = 200f;
     [SerializeField] private float sprintMultiplier = 2f;
+    [SerializeField] private float turnSpeed = 15f;
+
+    [Header("Ссылки")]
+    [SerializeField] private Transform playerCameraTransform; 
 
     private Rigidbody rb;
     private PlayerInput input;
@@ -13,30 +18,47 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         input = GetComponent<PlayerInput>();
+        
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
-
+    
     void FixedUpdate()
     {
         if (input == null) return;
-
-        Vector2 moveInput = input.MovementInput;
-        if (moveInput == Vector2.zero) return;
-
+        
+        Vector3 camForward = playerCameraTransform.forward;
+        Vector3 camRight = playerCameraTransform.right;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+        
+        Vector3 moveDirection = (camForward * input.MovementInput.y + camRight * input.MovementInput.x);
+        moveDirection.Normalize();
+        
         float currentSpeed = moveSpeed;
         if (input.IsSprinting)
             currentSpeed *= sprintMultiplier;
-
-        Vector3 move = transform.forward * moveInput.y + transform.right * moveInput.x;
-        move *= currentSpeed * Time.fixedDeltaTime;
-
-        rb.MovePosition(rb.position + move);
-
-        if (moveInput.x != 0)
+            
+        rb.linearVelocity = new Vector3(
+            moveDirection.x * currentSpeed,
+            rb.linearVelocity.y, 
+            moveDirection.z * currentSpeed
+        );
+        
+        rb.angularVelocity = Vector3.zero;
+        
+        if (moveDirection != Vector3.zero)
         {
-            float turn = moveInput.x * turnSpeed * Time.fixedDeltaTime;
-            rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, turn, 0f));
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            Quaternion newRotation = Quaternion.Slerp(rb.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime);
+            
+            var eulerRotation = newRotation.eulerAngles;
+            
+            eulerRotation.x = 0;
+            eulerRotation.z = 0;
+            
+            rb.MoveRotation(Quaternion.Euler(eulerRotation));
         }
     }
 }
-
-

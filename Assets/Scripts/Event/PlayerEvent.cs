@@ -10,3 +10,4 @@ public struct PlayerRespawnedEvent
 {
     public UnityEngine.Vector3 Position;
 }
+public struct PlayerAttackEvent { }

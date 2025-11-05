@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ThirdPersonCameraCollision : MonoBehaviour
+public class ThirdPersonCameraController : MonoBehaviour
 {
     public Transform target;
     public float distance = 5f;
@@ -19,6 +19,8 @@ public class ThirdPersonCameraCollision : MonoBehaviour
     private float rotationXAxis = 0f;
     private float velocityX = 0f;
     private float velocityY = 0f;
+    
+    private PlayerInput playerInput;
 
     void Start()
     {
@@ -29,35 +31,39 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
         if (GetComponent<Rigidbody>())
             GetComponent<Rigidbody>().freezeRotation = true;
+        
+        if (target != null)
+        {
+            playerInput = target.GetComponent<PlayerInput>();
+        }
     }
 
     void LateUpdate()
     {
-        if (target)
+        if (target && playerInput != null)
         {
-            velocityX += xSpeed * Input.GetAxis("Mouse X") * 0.02f;
-            velocityY += ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
+            velocityX += xSpeed * playerInput.MouseInput.x * 0.02f;
+            velocityY += ySpeed * playerInput.MouseInput.y * 0.02f;
 
             rotationYAxis += velocityX;
             rotationXAxis -= velocityY;
             rotationXAxis = ClampAngle(rotationXAxis, yMinLimit, yMaxLimit);
 
             Quaternion rotation = Quaternion.Euler(rotationXAxis, rotationYAxis, 0);
-
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            
+            float scroll = playerInput.ScrollInput;
             currentDistance = Mathf.Clamp(currentDistance - scroll * zoomSpeed, minDistance, maxDistance);
-
+            
             RaycastHit hit;
             Vector3 desiredPosition = target.position - (rotation * Vector3.forward * currentDistance);
             if (Physics.Linecast(target.position, desiredPosition, out hit, collisionLayers))
             {
                 currentDistance = Mathf.Clamp(hit.distance, minDistance, currentDistance);
             }
-
+            
             transform.position = target.position - (rotation * Vector3.forward * currentDistance);
             transform.rotation = rotation;
-
-
+            
             velocityX = Mathf.Lerp(velocityX, 0, 0.2f);
             velocityY = Mathf.Lerp(velocityY, 0, 0.2f);
         }
