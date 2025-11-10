@@ -3,17 +3,32 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Настройки")]
-    [SerializeField] private float moveSpeed = 5f;
+    private float moveSpeed;
+    
+    [Header("Налаштування")]
     [SerializeField] private float sprintMultiplier = 2f;
     [SerializeField] private float turnSpeed = 15f;
 
-    [Header("Ссылки")]
+    [Header("Посилання")]
     [SerializeField] private Transform playerCameraTransform; 
 
     private Rigidbody rb;
     private PlayerInput input;
 
+    private void OnEnable()
+    {
+        EventBroker.Subscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+    }
+    
+    private void OnDisable()
+    {
+        EventBroker.Unsubscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+    }
+    
+    private void OnStatsUpdated(PlayerStatsUpdatedEvent e)
+    {
+        moveSpeed = e.NewMoveSpeed;
+    }
     void Awake()
     {
         rb = GetComponent<Rigidbody>();

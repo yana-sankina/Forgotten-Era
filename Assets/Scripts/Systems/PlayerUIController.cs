@@ -2,12 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerHealthUIController : MonoBehaviour
+public class PlayerUIController : MonoBehaviour
 {
     [Header("UI Елементи здоров'я")]
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthText;
 
+    [Header("UI Елементы Росту")]
+    [SerializeField] private Slider growthBar;
+    
     [Header("UI Елементи Смерті")]
     [SerializeField] private GameObject deathScreenPanel;
     
@@ -16,6 +19,7 @@ public class PlayerHealthUIController : MonoBehaviour
         EventBroker.Subscribe<PlayerHealthChangedEvent>(UpdateHealthUI);
         EventBroker.Subscribe<PlayerDiedEvent>(ShowDeathScreen);
         EventBroker.Subscribe<PlayerRespawnedEvent>(OnPlayerRespawn);
+        EventBroker.Subscribe<PlayerGrowthChangedEvent>(UpdateGrowthUI);
     }
     
     private void OnDisable()
@@ -23,6 +27,7 @@ public class PlayerHealthUIController : MonoBehaviour
         EventBroker.Unsubscribe<PlayerHealthChangedEvent>(UpdateHealthUI);
         EventBroker.Unsubscribe<PlayerDiedEvent>(ShowDeathScreen);
         EventBroker.Unsubscribe<PlayerRespawnedEvent>(OnPlayerRespawn);
+        EventBroker.Unsubscribe<PlayerGrowthChangedEvent>(UpdateGrowthUI);
     }
     
     private void UpdateHealthUI(PlayerHealthChangedEvent e)
@@ -53,5 +58,12 @@ public class PlayerHealthUIController : MonoBehaviour
             deathScreenPanel.SetActive(false);
         }
         
+    }
+    
+    private void UpdateGrowthUI(PlayerGrowthChangedEvent e)
+    {
+        if (growthBar == null) return;
+        
+        growthBar.value = (e.MaxGrowth > 0) ? (e.CurrentGrowth / e.MaxGrowth) : 0;
     }
 }

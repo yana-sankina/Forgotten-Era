@@ -3,14 +3,37 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHP = 100;
+    public int maxHP;
     public int currentHP;
 
     private bool isDead = false;
 
-    void Start()
+    private void OnEnable()
     {
-        currentHP = maxHP;
+        EventBroker.Subscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+    }
+    
+    private void OnDisable()
+    {
+        EventBroker.Unsubscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+    }
+    
+    private void OnStatsUpdated(PlayerStatsUpdatedEvent e)
+    {
+        int oldMaxHP = maxHP;
+        maxHP = e.NewMaxHP;
+        
+        int hpGained = maxHP - oldMaxHP;
+        if (!isDead && hpGained > 0 && currentHP > 0)
+        {
+            Heal(hpGained);
+        }
+        else if (currentHP == 0 && !isDead)
+        {
+            currentHP = maxHP;
+     
+            EventBroker.Publish(new PlayerHealthChangedEvent { CurrentHP = currentHP, MaxHP = maxHP });
+        }
     }
 
     public void TakeDamage(int amount)
