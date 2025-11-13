@@ -23,3 +23,26 @@ public struct PlayerStatsUpdatedEvent
     public int NewAttackDamage;
     public float NewMoveSpeed;
 }
+
+public struct PlayerHungerChangedEvent
+{
+    public float Current;
+    public float Max;
+}
+
+public struct PlayerThirstChangedEvent
+{
+    public float Current;
+    public float Max;
+}
+
+public struct EnvironmentDamageEvent
+{
+    public int DamageAmount;
+}
+
+public struct PlayerStaminaChangedEvent
+{
+    public float Current;
+    public float Max;
+}

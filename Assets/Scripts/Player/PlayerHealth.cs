@@ -11,11 +11,13 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         EventBroker.Subscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+        EventBroker.Subscribe<EnvironmentDamageEvent>(OnEnvironmentDamage);
     }
     
     private void OnDisable()
     {
         EventBroker.Unsubscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+        EventBroker.Unsubscribe<EnvironmentDamageEvent>(OnEnvironmentDamage);
     }
     
     private void OnStatsUpdated(PlayerStatsUpdatedEvent e)
@@ -76,5 +78,10 @@ public class PlayerHealth : MonoBehaviour
         EventBroker.Publish(new PlayerRespawnedEvent { Position = position });
 
         transform.position = position;
+    }
+    
+    private void OnEnvironmentDamage(EnvironmentDamageEvent e)
+    {
+        TakeDamage(e.DamageAmount);
     }
 }

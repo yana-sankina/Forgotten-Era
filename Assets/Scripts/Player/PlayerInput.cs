@@ -4,9 +4,11 @@ public class PlayerInput : MonoBehaviour
 {
     public Vector2 MovementInput { get; private set; }
     public bool IsSprinting { get; private set; }
-    
     public Vector2 MouseInput { get; private set; }
     public float ScrollInput { get; private set; }
+    public bool InteractInput { get; private set; }
+    
+    public bool InteractHeldInput { get; private set; }
     
     private bool isControlLocked = false;
     
@@ -31,6 +33,8 @@ public class PlayerInput : MonoBehaviour
             IsSprinting = false;
             MouseInput = Vector2.zero;
             ScrollInput = 0f;
+            InteractInput = false;
+            InteractHeldInput = false;
             return; 
         }
         
@@ -47,6 +51,8 @@ public class PlayerInput : MonoBehaviour
         {
             EventBroker.Publish(new PlayerAttackEvent());
         }
+        InteractInput = Input.GetKeyDown(KeyCode.E); 
+        InteractHeldInput = Input.GetKey(KeyCode.E);
     }
 
     private void OnPlayerDied(PlayerDiedEvent e)

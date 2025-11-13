@@ -11,8 +11,15 @@ public class PlayerUIController : MonoBehaviour
     [Header("UI Елементы Росту")]
     [SerializeField] private Slider growthBar;
     
+    [Header("UI Елементи Потреб")]
+    [SerializeField] private Slider hungerBar;
+    [SerializeField] private Slider thirstBar;
+    
     [Header("UI Елементи Смерті")]
     [SerializeField] private GameObject deathScreenPanel;
+    
+    [Header("UI Елементи Витривалості")]
+    [SerializeField] private Slider staminaBar;
     
     private void OnEnable()
     {
@@ -20,6 +27,9 @@ public class PlayerUIController : MonoBehaviour
         EventBroker.Subscribe<PlayerDiedEvent>(ShowDeathScreen);
         EventBroker.Subscribe<PlayerRespawnedEvent>(OnPlayerRespawn);
         EventBroker.Subscribe<PlayerGrowthChangedEvent>(UpdateGrowthUI);
+        EventBroker.Subscribe<PlayerHungerChangedEvent>(UpdateHungerUI);
+        EventBroker.Subscribe<PlayerThirstChangedEvent>(UpdateThirstUI);
+        EventBroker.Subscribe<PlayerStaminaChangedEvent>(UpdateStaminaUI);
     }
     
     private void OnDisable()
@@ -28,6 +38,9 @@ public class PlayerUIController : MonoBehaviour
         EventBroker.Unsubscribe<PlayerDiedEvent>(ShowDeathScreen);
         EventBroker.Unsubscribe<PlayerRespawnedEvent>(OnPlayerRespawn);
         EventBroker.Unsubscribe<PlayerGrowthChangedEvent>(UpdateGrowthUI);
+        EventBroker.Unsubscribe<PlayerHungerChangedEvent>(UpdateHungerUI);
+        EventBroker.Unsubscribe<PlayerThirstChangedEvent>(UpdateThirstUI);
+        EventBroker.Unsubscribe<PlayerStaminaChangedEvent>(UpdateStaminaUI);
     }
     
     private void UpdateHealthUI(PlayerHealthChangedEvent e)
@@ -65,5 +78,29 @@ public class PlayerUIController : MonoBehaviour
         if (growthBar == null) return;
         
         growthBar.value = (e.MaxGrowth > 0) ? (e.CurrentGrowth / e.MaxGrowth) : 0;
+    }
+    
+    private void UpdateHungerUI(PlayerHungerChangedEvent e)
+    {
+        if (hungerBar != null)
+        {
+            hungerBar.value = (e.Max > 0) ? (e.Current / e.Max) : 0;
+        }
+    }
+    
+    private void UpdateThirstUI(PlayerThirstChangedEvent e)
+    {
+        if (thirstBar != null)
+        {
+            thirstBar.value = (e.Max > 0) ? (e.Current / e.Max) : 0;
+        }
+    }
+    
+    private void UpdateStaminaUI(PlayerStaminaChangedEvent e)
+    {
+        if (staminaBar != null)
+        {
+            staminaBar.value = (e.Max > 0) ? (e.Current / e.Max) : 0;
+        }
     }
 }
