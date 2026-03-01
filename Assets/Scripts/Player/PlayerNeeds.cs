@@ -13,12 +13,43 @@ public class PlayerNeeds : MonoBehaviour
     public float CurrentThirst { get; private set; }
     
     public float CurrentHunger { get; private set; }
-    
-    private bool isStarving = false;
-    private bool isDehydrated = false;
+
+
+    private void OnEnable()
+    {
+        EventBroker.Subscribe<PlayerNeedsCapacityUpdatedEvent>(OnCapacityUpdated);
+    }
+
+    private void OnDisable()
+    {
+        EventBroker.Unsubscribe<PlayerNeedsCapacityUpdatedEvent>(OnCapacityUpdated);
+    }
+
+    /// <summary>
+    /// Когда динозавр растёт, его желудок и потребность в воде увеличиваются.
+    /// Текущие значения масштабируются пропорционально.
+    /// </summary>
+    private void OnCapacityUpdated(PlayerNeedsCapacityUpdatedEvent e)
+    {
+        // Пропорциональное масштабирование: если было 50/100 (50%), станет 75/150 (50%)
+        if (maxHunger > 0)
+            CurrentHunger = (CurrentHunger / maxHunger) * e.NewMaxHunger;
+        if (maxThirst > 0)
+            CurrentThirst = (CurrentThirst / maxThirst) * e.NewMaxThirst;
+
+        maxHunger = e.NewMaxHunger;
+        maxThirst = e.NewMaxThirst;
+        hungerDecayRate = e.HungerDecayRate;
+        thirstDecayRate = e.ThirstDecayRate;
+
+        PublishHungerEvent();
+        PublishThirstEvent();
+    }
     
     void Start()
     {
+        // Начальные значения будут выставлены через OnCapacityUpdated от PlayerGrowth
+        // но на случай если событие придёт позже — ставим дефолт
         CurrentHunger = maxHunger;
         CurrentThirst = maxThirst;
         

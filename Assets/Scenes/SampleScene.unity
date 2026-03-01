@@ -1410,17 +1410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e682bef26232d124183db5ce4695111f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGrowth: 100
-  growthPerTick: 5
-  growthInterval: 3
-  minScale: 0.5
-  maxScale: 1
-  minHealth: 80
-  maxHealth: 250
-  minDamage: 10
-  maxDamage: 50
-  minSpeed: 2
-  maxSpeed: 10
+  speciesData: {fileID: 11400000, guid: 6514bc661bb2f07488c8c5538007303f, type: 2}
 --- !u!114 &387171295
 MonoBehaviour:
   m_ObjectHideFlags: 0

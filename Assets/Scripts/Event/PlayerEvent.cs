@@ -46,3 +46,11 @@ public struct PlayerStaminaChangedEvent
     public float Current;
     public float Max;
 }
+
+public struct PlayerNeedsCapacityUpdatedEvent
+{
+    public float NewMaxHunger;
+    public float NewMaxThirst;
+    public float HungerDecayRate;
+    public float ThirstDecayRate;
+}
