@@ -9,6 +9,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float turnSpeed = 15f;
 
+    [Header("Контроль в воздухе")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckDistance = 0.3f;
+    [Tooltip("0 = нет управления в воздухе, 1 = полное управление")]
+    [SerializeField] private float airControlFactor = 0.05f;
+
     [Header("Посилання")] [SerializeField] private Transform playerCameraTransform;
 
     private Rigidbody rb;
@@ -60,11 +66,36 @@ public class PlayerMovement : MonoBehaviour
         if (isSprinting)
             currentSpeed *= sprintMultiplier;
 
-        rb.linearVelocity = new Vector3(
-            moveDirection.x * currentSpeed,
-            rb.linearVelocity.y,
-            moveDirection.z * currentSpeed
-        );
+        bool grounded = IsGrounded();
+
+        if (grounded)
+        {
+            // На земле — полный контроль
+            rb.linearVelocity = new Vector3(
+                moveDirection.x * currentSpeed,
+                rb.linearVelocity.y,
+                moveDirection.z * currentSpeed
+            );
+        }
+        else
+        {
+            // В воздухе — почти нет контроля, сохраняем инерцию
+            // Спринт ЧАСТИЧНО влияет на прыжок (70% от скорости спринта)
+            float airMaxSpeed = isSprinting ? moveSpeed * sprintMultiplier * 0.7f : moveSpeed;
+
+            Vector3 airVelocity = rb.linearVelocity;
+            airVelocity.x += moveDirection.x * moveSpeed * airControlFactor;
+            airVelocity.z += moveDirection.z * moveSpeed * airControlFactor;
+
+            // Ограничиваем горизонтальную скорость
+            Vector2 horizontalVel = new Vector2(airVelocity.x, airVelocity.z);
+            if (horizontalVel.magnitude > airMaxSpeed)
+            {
+                horizontalVel = horizontalVel.normalized * airMaxSpeed;
+            }
+
+            rb.linearVelocity = new Vector3(horizontalVel.x, rb.linearVelocity.y, horizontalVel.y);
+        }
 
         rb.angularVelocity = Vector3.zero;
 
@@ -79,5 +110,10 @@ public class PlayerMovement : MonoBehaviour
 
             rb.MoveRotation(Quaternion.Euler(eulerRotation));
         }
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
     }
 }

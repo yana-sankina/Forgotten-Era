@@ -280,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
+  xpReward: 25
 --- !u!54 &46390855
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1157,6 +1158,7 @@ GameObject:
   - component: {fileID: 387171296}
   - component: {fileID: 387171297}
   - component: {fileID: 387171298}
+  - component: {fileID: 387171299}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -1289,6 +1291,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprintMultiplier: 2
   turnSpeed: 3
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckDistance: 0.3
+  airControlFactor: 0.05
   playerCameraTransform: {fileID: 330585546}
 --- !u!114 &387171288
 MonoBehaviour:
@@ -1410,7 +1417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e682bef26232d124183db5ce4695111f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speciesData: {fileID: 11400000, guid: 6514bc661bb2f07488c8c5538007303f, type: 2}
+  speciesData: {fileID: 11400000, guid: 8c49b9abc2b4f284b81b2545c56b4577, type: 2}
 --- !u!114 &387171295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1478,6 +1485,23 @@ MonoBehaviour:
   staminaDecayRate: 10
   staminaRegenRate: 15
   regenDelay: 2
+--- !u!114 &387171299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387171279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba10ad4efbceba64bbfa1bcd618f67e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityCooldown: 10
+  abilityDuration: 0.4
+  stunDuration: 1.5
+  damageMultiplier: 0.33
+  attackHitbox: {fileID: 1327159027}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2955,8 +2979,8 @@ Transform:
   m_GameObject: {fileID: 1327159022}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.294, z: 1.103}
-  m_LocalScale: {x: 0.7030176, y: 0.7030176, z: 0.67216986}
+  m_LocalPosition: {x: 0, y: 0.03, z: 1.31}
+  m_LocalScale: {x: 1.3244148, y: 1.3244148, z: 1.2663008}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 387171284}
@@ -3969,6 +3993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
+  xpReward: 25
 --- !u!1 &1941551794
 GameObject:
   m_ObjectHideFlags: 0

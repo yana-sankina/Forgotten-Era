@@ -54,3 +54,20 @@ public struct PlayerNeedsCapacityUpdatedEvent
     public float HungerDecayRate;
     public float ThirstDecayRate;
 }
+
+public struct EnemyKilledEvent
+{
+    public int XPReward;
+}
+
+public struct AbilityUsedEvent
+{
+    public string AbilityName;
+    public float Cooldown;
+}
+
+public struct EntityDetectedEvent
+{
+    public UnityEngine.Transform EntityTransform;
+    public float Duration;
+}

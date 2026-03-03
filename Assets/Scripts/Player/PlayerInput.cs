@@ -7,8 +7,9 @@ public class PlayerInput : MonoBehaviour
     public Vector2 MouseInput { get; private set; }
     public float ScrollInput { get; private set; }
     public bool InteractInput { get; private set; }
-    
     public bool InteractHeldInput { get; private set; }
+    public bool JumpInput { get; private set; }
+    public bool AbilityInput { get; private set; }
     
     private bool isControlLocked = false;
     
@@ -35,6 +36,8 @@ public class PlayerInput : MonoBehaviour
             ScrollInput = 0f;
             InteractInput = false;
             InteractHeldInput = false;
+            JumpInput = false;
+            AbilityInput = false;
             return; 
         }
         
@@ -53,6 +56,8 @@ public class PlayerInput : MonoBehaviour
         }
         InteractInput = Input.GetKeyDown(KeyCode.E); 
         InteractHeldInput = Input.GetKey(KeyCode.E);
+        JumpInput = Input.GetKeyDown(KeyCode.Space);
+        AbilityInput = Input.GetKeyDown(KeyCode.Q);
     }
 
     private void OnPlayerDied(PlayerDiedEvent e)
