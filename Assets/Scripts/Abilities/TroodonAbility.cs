@@ -31,6 +31,17 @@ public class TroodonAbility : MonoBehaviour, IDinosaurAbility
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+
+        // Подтягиваем groundLayer из PlayerMovement (там он уже настроен в инспекторе)
+        if (groundLayer == 0)
+        {
+            var movement = GetComponent<PlayerMovement>();
+            if (movement != null)
+            {
+                groundLayer = movement.GroundLayer;
+                groundCheckDistance = movement.GroundCheckDistance;
+            }
+        }
     }
 
     private void Update()

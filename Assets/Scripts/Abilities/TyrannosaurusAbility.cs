@@ -28,6 +28,9 @@ public class TyrannosaurusAbility : MonoBehaviour, IDinosaurAbility
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+
+        if (attackHitbox == null)
+            attackHitbox = GetComponentInChildren<Hitbox>(true);
     }
 
     private void OnEnable()

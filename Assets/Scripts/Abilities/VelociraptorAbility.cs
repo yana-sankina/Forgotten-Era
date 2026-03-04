@@ -37,6 +37,21 @@ public class VelociraptorAbility : MonoBehaviour, IDinosaurAbility
         playerInput = GetComponent<PlayerInput>();
         playerAttack = GetComponent<PlayerAttack>();
         rb = GetComponent<Rigidbody>();
+
+        // Автопоиск хитбокса если не задан (при добавлении через AddComponent)
+        if (attackHitbox == null)
+            attackHitbox = GetComponentInChildren<Hitbox>(true);
+
+        // Подтягиваем groundLayer из PlayerMovement (там он уже настроен в инспекторе)
+        if (groundLayer == 0)
+        {
+            var movement = GetComponent<PlayerMovement>();
+            if (movement != null)
+            {
+                groundLayer = movement.GroundLayer;
+                groundCheckDistance = movement.GroundCheckDistance;
+            }
+        }
     }
 
     private void OnEnable()

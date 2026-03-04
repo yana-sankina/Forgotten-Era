@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Контроль в воздухе")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 0.3f;
+    public LayerMask GroundLayer => groundLayer;
+    public float GroundCheckDistance => groundCheckDistance;
     [Tooltip("0 = нет управления в воздухе, 1 = полное управление")]
     [SerializeField] private float airControlFactor = 0.05f;
 

@@ -4,25 +4,38 @@ using System.Collections;
 public class PlayerGrowth : MonoBehaviour
 {
     [Header("Данные вида")]
-    [Tooltip("Перетащите сюда SO нужного вида динозавра")]
+    [Tooltip("Задаётся автоматически через DinosaurInitializer")]
     [SerializeField] private DinosaurSpeciesData speciesData;
 
     private float currentGrowth = 0f;
+    private bool isInitialized = false;
 
-    void Start()
+    /// <summary>
+    /// Вызывается DinosaurInitializer при старте сцены.
+    /// Задаёт SO вида и запускает рост.
+    /// </summary>
+    public void Initialize(DinosaurSpeciesData data)
     {
-        if (speciesData == null)
-        {
-            Debug.LogError("DinosaurSpeciesData не назначен! Перетащите SO вида в инспектор.", this);
-            return;
-        }
-
+        speciesData = data;
         currentGrowth = 0f;
+        isInitialized = true;
 
         UpdateScaleAndStats();
         PublishGrowthEvent();
 
         StartCoroutine(GrowthLoop());
+    }
+
+    void Start()
+    {
+        // Если Initialize() уже вызван — ничего не делаем
+        if (isInitialized) return;
+
+        // Фоллбэк: если SO задан в инспекторе (тестирование без меню)
+        if (speciesData != null)
+        {
+            Initialize(speciesData);
+        }
     }
 
     private IEnumerator GrowthLoop()

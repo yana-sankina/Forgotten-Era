@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerUIController : MonoBehaviour
@@ -102,5 +103,16 @@ public class PlayerUIController : MonoBehaviour
         {
             staminaBar.value = (e.Max > 0) ? (e.Current / e.Max) : 0;
         }
+    }
+
+    /// <summary>
+    /// Кнопка «В главное меню» на экране смерти.
+    /// Подключи через OnClick на кнопке.
+    /// </summary>
+    public void ReturnToMainMenu()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("MainMenu");
     }
 }
