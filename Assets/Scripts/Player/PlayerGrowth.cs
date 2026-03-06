@@ -9,15 +9,21 @@ public class PlayerGrowth : MonoBehaviour
 
     private float currentGrowth = 0f;
     private bool isInitialized = false;
+    private int currentStageIndex = -1;
+
+    // Бонусы от очков прокачки (поверх роста)
+    private int bonusHP = 0;
+    private int bonusATK = 0;
+    private float bonusSPD = 0f;
 
     /// <summary>
     /// Вызывается DinosaurInitializer при старте сцены.
-    /// Задаёт SO вида и запускает рост.
     /// </summary>
     public void Initialize(DinosaurSpeciesData data)
     {
         speciesData = data;
         currentGrowth = 0f;
+        currentStageIndex = -1;
         isInitialized = true;
 
         UpdateScaleAndStats();
@@ -28,20 +34,39 @@ public class PlayerGrowth : MonoBehaviour
 
     void Start()
     {
-        // Если Initialize() уже вызван — ничего не делаем
         if (isInitialized) return;
 
-        // Фоллбэк: если SO задан в инспекторе (тестирование без меню)
         if (speciesData != null)
         {
             Initialize(speciesData);
         }
     }
 
+    private void OnEnable()
+    {
+        EventBroker.Subscribe<PlayerBonusStatsUpdatedEvent>(OnBonusStatsUpdated);
+    }
+
+    private void OnDisable()
+    {
+        EventBroker.Unsubscribe<PlayerBonusStatsUpdatedEvent>(OnBonusStatsUpdated);
+    }
+
+    private void OnBonusStatsUpdated(PlayerBonusStatsUpdatedEvent e)
+    {
+        bonusHP = e.BonusHP;
+        bonusATK = e.BonusATK;
+        bonusSPD = e.BonusSPD;
+
+        // Пересчитываем статы с новыми бонусами
+        if (speciesData != null)
+            UpdateScaleAndStats();
+    }
+
     private IEnumerator GrowthLoop()
     {
         float maxGrowth = speciesData.maxGrowth;
-        
+
         while (currentGrowth < maxGrowth)
         {
             yield return new WaitForSeconds(speciesData.growthInterval);
@@ -51,10 +76,41 @@ public class PlayerGrowth : MonoBehaviour
 
             UpdateScaleAndStats();
             PublishGrowthEvent();
+            CheckStageThresholds();
 
             if (currentGrowth >= maxGrowth)
             {
                 Debug.LogWarning("Игрок ДОСТИГ МАКСИМАЛЬНОГО РОСТА!");
+                break;
+            }
+        }
+    }
+
+    private void CheckStageThresholds()
+    {
+        if (speciesData.growthStageThresholds == null) return;
+
+        float growthPercent = (currentGrowth / speciesData.maxGrowth) * 100f;
+
+        for (int i = currentStageIndex + 1; i < speciesData.growthStageThresholds.Length; i++)
+        {
+            if (growthPercent >= speciesData.growthStageThresholds[i])
+            {
+                currentStageIndex = i;
+
+                int bonus = (i < speciesData.stageStatBonus.Length) ? speciesData.stageStatBonus[i] : 1;
+
+                Debug.Log("Стадия роста " + (i + 1) + "! Рост: " +
+                    growthPercent.ToString("F0") + "% → +" + bonus + " очков");
+
+                EventBroker.Publish(new GrowthStageReachedEvent
+                {
+                    StageIndex = i + 1,
+                    BonusPoints = bonus
+                });
+            }
+            else
+            {
                 break;
             }
         }
@@ -68,10 +124,10 @@ public class PlayerGrowth : MonoBehaviour
         float newScale = speciesData.GetScale(growthPercent);
         transform.localScale = new Vector3(newScale, newScale, newScale);
 
-        // Боевые характеристики
-        int newHealth = speciesData.GetMaxHP(growthPercent);
-        int newDamage = speciesData.GetAttackDamage(growthPercent);
-        float newSpeed = speciesData.GetMoveSpeed(growthPercent);
+        // Базовые характеристики от роста + бонусы от прокачки
+        int newHealth = speciesData.GetMaxHP(growthPercent) + bonusHP;
+        int newDamage = speciesData.GetAttackDamage(growthPercent) + bonusATK;
+        float newSpeed = speciesData.GetMoveSpeed(growthPercent) + bonusSPD;
 
         EventBroker.Publish(new PlayerStatsUpdatedEvent
         {
@@ -80,7 +136,7 @@ public class PlayerGrowth : MonoBehaviour
             NewMoveSpeed = newSpeed
         });
 
-        // Потребности — желудок и жажда масштабируются с ростом
+        // Потребности
         float newMaxHunger = speciesData.GetMaxHunger(growthPercent);
         float newMaxThirst = speciesData.GetMaxThirst(growthPercent);
 

@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     public bool InteractHeldInput { get; private set; }
     public bool JumpInput { get; private set; }
     public bool AbilityInput { get; private set; }
+    public bool UpgradeMenuInput { get; private set; }
     
     private bool isControlLocked = false;
     
@@ -38,6 +39,7 @@ public class PlayerInput : MonoBehaviour
             InteractHeldInput = false;
             JumpInput = false;
             AbilityInput = false;
+            UpgradeMenuInput = false;
             return; 
         }
         
@@ -58,6 +60,7 @@ public class PlayerInput : MonoBehaviour
         InteractHeldInput = Input.GetKey(KeyCode.E);
         JumpInput = Input.GetKeyDown(KeyCode.Space);
         AbilityInput = Input.GetKeyDown(KeyCode.Q);
+        UpgradeMenuInput = Input.GetKeyDown(KeyCode.Tab);
     }
 
     private void OnPlayerDied(PlayerDiedEvent e)

@@ -5,6 +5,11 @@ public class Damageable : MonoBehaviour
 {
     [SerializeField] private int maxHP = 100;
     [SerializeField] private int xpReward = 25;
+
+    [Header("Авто-респаун (для тестов)")]
+    [SerializeField] private bool autoRespawn = false;
+    [SerializeField] private float respawnDelay = 3f;
+
     private int currentHP;
 
     public bool IsDead { get; private set; } = false;
@@ -78,8 +83,25 @@ public class Damageable : MonoBehaviour
         if (IsDead) return;
         IsDead = true;
 
-        // Публикуем событие смерти с наградой XP (для системы опыта)
         EventBroker.Publish(new EnemyKilledEvent { XPReward = xpReward });
         Debug.Log(gameObject.name + " убит! XP: " + xpReward);
+
+        if (autoRespawn)
+        {
+            StartCoroutine(RespawnCoroutine());
+        }
+    }
+
+    private IEnumerator RespawnCoroutine()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+
+        currentHP = maxHP;
+        IsDead = false;
+        IsStunned = false;
+        bleedCoroutine = null;
+        stunCoroutine = null;
+
+        Debug.Log(gameObject.name + " воскрес!");
     }
 }

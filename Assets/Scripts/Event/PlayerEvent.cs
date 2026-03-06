@@ -71,3 +71,36 @@ public struct EntityDetectedEvent
     public UnityEngine.Transform EntityTransform;
     public float Duration;
 }
+
+// === Этап 2: Прокачка ===
+
+public struct GrowthStageReachedEvent
+{
+    public int StageIndex;
+    public int BonusPoints;
+}
+
+public struct ExperienceChangedEvent
+{
+    public int CurrentXP;
+    public int XPToNextLevel;
+    public int Level;
+}
+
+public struct LevelUpEvent
+{
+    public int NewLevel;
+    public int StatPoints;
+}
+
+public struct StatPointsChangedEvent
+{
+    public int AvailablePoints;
+}
+
+public struct PlayerBonusStatsUpdatedEvent
+{
+    public int BonusHP;
+    public int BonusATK;
+    public float BonusSPD;
+}
