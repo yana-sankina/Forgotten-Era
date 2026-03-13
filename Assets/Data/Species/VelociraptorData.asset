@@ -39,4 +39,5 @@ MonoBehaviour:
   - 80
   - 100
   stageStatBonus: 320000005000000078000000b4000000fa000000
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 5842638277902454984, guid: fd829616fe2618249a0b46e2f1551775, type: 3}
+  modelYOffset: -0.6

@@ -7,11 +7,14 @@ public class PlayerAttack : MonoBehaviour
     
     [Header("Налаштування Атаки")]
     [SerializeField] private float attackDuration = 0.3f;
+    [Tooltip("Кулдаун после атаки (подбери под длину анимации)")]
+    [SerializeField] private float attackCooldown = 0.8f;
 
     [Header("Посилання")]
     [SerializeField] private Hitbox attackHitbox; 
 
     private bool isAttacking = false;
+    private float cooldownTimer = 0f;
 
     private void Awake()
     {
@@ -29,6 +32,12 @@ public class PlayerAttack : MonoBehaviour
         EventBroker.Unsubscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
         EventBroker.Unsubscribe<PlayerAttackEvent>(OnAttack);
     }
+
+    private void Update()
+    {
+        if (cooldownTimer > 0f)
+            cooldownTimer -= Time.deltaTime;
+    }
     
     private void OnStatsUpdated(PlayerStatsUpdatedEvent e)
     {
@@ -36,7 +45,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void OnAttack(PlayerAttackEvent e)
     {
-        if (!isAttacking)
+        if (!isAttacking && cooldownTimer <= 0f)
         {
             PerformAttack();
         }
@@ -58,6 +67,7 @@ public class PlayerAttack : MonoBehaviour
         
         attackHitbox.gameObject.SetActive(false);
         
-        isAttacking = false; 
+        isAttacking = false;
+        cooldownTimer = attackCooldown;
     }
 }

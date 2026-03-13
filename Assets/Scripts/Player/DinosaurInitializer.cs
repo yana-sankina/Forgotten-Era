@@ -43,6 +43,37 @@ public class DinosaurInitializer : MonoBehaviour
         {
             growth.Initialize(species);
         }
+
+        // 3. Модель и анимации
+        SetupModel(species);
+    }
+
+    private void SetupModel(DinosaurSpeciesData species)
+    {
+        if (species.modelPrefab == null)
+        {
+            Debug.LogWarning("modelPrefab не задан для " + species.speciesName + " — игрок остаётся кубом.");
+            return;
+        }
+
+        // Добавляем ModelSwitcher если нет, и спавним модель
+        ModelSwitcher switcher = GetComponent<ModelSwitcher>();
+        if (switcher == null)
+            switcher = gameObject.AddComponent<ModelSwitcher>();
+
+        switcher.SwitchModel(species.modelPrefab, species.modelYOffset);
+
+        // Добавляем DinosaurAnimator и инициализируем его
+        Animator modelAnimator = switcher.GetModelAnimator();
+        if (modelAnimator != null)
+        {
+            DinosaurAnimator dAnimator = GetComponent<DinosaurAnimator>();
+            if (dAnimator == null)
+                dAnimator = gameObject.AddComponent<DinosaurAnimator>();
+
+            dAnimator.Init(modelAnimator);
+            Debug.Log("Animator подключён к модели.");
+        }
     }
 
     private void AttachAbility(DinosaurSpeciesData species)
@@ -60,7 +91,7 @@ public class DinosaurInitializer : MonoBehaviour
             var comp = gameObject.AddComponent<VelociraptorAbility>();
             ability = comp;
         }
-        else if (speciesName.Contains("тиранозавр") || speciesName.Contains("tyrannosaurus") || speciesName.Contains("t-rex") || speciesName.Contains("rex"))
+        else if (speciesName.Contains("тиранозавр") || speciesName.Contains("тирекс") || speciesName.Contains("рекс") || speciesName.Contains("tyrannosaurus") || speciesName.Contains("t-rex") || speciesName.Contains("rex"))
         {
             var comp = gameObject.AddComponent<TyrannosaurusAbility>();
             ability = comp;

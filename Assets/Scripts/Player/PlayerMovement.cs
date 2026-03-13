@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Налаштування")] [SerializeField]
     private float sprintMultiplier = 2f;
 
-    [SerializeField] private float turnSpeed = 15f;
+    [SerializeField] private float turnSpeed = 7f;
 
     [Header("Контроль в воздухе")]
     [SerializeField] private LayerMask groundLayer;

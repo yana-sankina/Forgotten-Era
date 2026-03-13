@@ -55,6 +55,8 @@ public class DinosaurSpeciesData : ScriptableObject
     [Header("Модель")]
     [Tooltip("Префаб 3D-модели динозавра (пока можно оставить пустым)")]
     public GameObject modelPrefab;
+    [Tooltip("Сдвиг модели по Y (вниз = отрицательное). Подбери чтобы ноги касались земли.")]
+    public float modelYOffset = 0f;
 
     /// <summary>
     /// Интерполирует характеристики по проценту роста (0..1).

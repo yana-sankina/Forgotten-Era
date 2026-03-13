@@ -21,6 +21,12 @@ MonoBehaviour:
   grownMaxHP: 250
   grownAttackDamage: 50
   grownMoveSpeed: 4
+  baseMaxHunger: 60
+  grownMaxHunger: 150
+  baseMaxThirst: 60
+  grownMaxThirst: 150
+  hungerDecayRate: 1
+  thirstDecayRate: 1.5
   minScale: 0.5
   maxScale: 1
   maxGrowth: 100
@@ -33,4 +39,5 @@ MonoBehaviour:
   - 80
   - 100
   stageStatBonus: 320000005000000078000000b4000000fa000000
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 1416865728008679827, guid: 8064300cab7882e4fbfab6ebdedf07ab, type: 3}
+  modelYOffset: -0.6

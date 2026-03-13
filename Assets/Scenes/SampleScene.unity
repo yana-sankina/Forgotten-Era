@@ -1509,7 +1509,7 @@ Transform:
   m_GameObject: {fileID: 387171279}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.79333484, y: 2.37, z: 1.53}
+  m_LocalPosition: {x: 0, y: -1.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1614,6 +1614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDuration: 0.3
+  attackCooldown: 0.8
   attackHitbox: {fileID: 1327159027}
 --- !u!65 &387171292
 BoxCollider:
