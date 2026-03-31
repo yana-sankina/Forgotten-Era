@@ -5,12 +5,17 @@ using System.Collections;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    [Header("Радиус обнаружения")]
+    [SerializeField] private float detectionRadius = 3f;
+    [SerializeField] private float scanInterval = 0.25f; // сканировать 4 раза в секунду
+
     private PlayerInput playerInput;
     private PlayerNeeds playerNeeds;
     private List<Consumable> nearbyItems = new List<Consumable>();
 
     private Coroutine drinkingCoroutine = null;
     private Consumable currentWaterSource = null;
+    private float scanTimer = 0f;
 
     private void Awake()
     {
@@ -18,33 +23,16 @@ public class PlayerInteraction : MonoBehaviour
         playerNeeds = GetComponent<PlayerNeeds>();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Consumable>(out Consumable item))
-        {
-            if (!nearbyItems.Contains(item))
-            {
-                nearbyItems.Add(item);
-                Debug.Log("Вижу предмет: " + item.name);
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<Consumable>(out Consumable item))
-        {
-            if (nearbyItems.Contains(item))
-            {
-                nearbyItems.Remove(item);
-                Debug.Log("Предмет ушел из зоны: " + item.name);
-            }
-        }
-    }
-
-
     private void Update()
     {
+        // Периодически сканируем область вокруг на предметы
+        scanTimer -= Time.deltaTime;
+        if (scanTimer <= 0f)
+        {
+            scanTimer = scanInterval;
+            ScanNearby();
+        }
+
         if (playerInput.InteractInput)
         {
             TryEat();
@@ -57,6 +45,29 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             TryStopDrinking();
+        }
+    }
+
+    /// <summary>
+    /// Ищем все Consumable в радиусе без триггеров — через OverlapSphere.
+    /// </summary>
+    private void ScanNearby()
+    {
+        nearbyItems.Clear();
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius);
+        foreach (var col in hits)
+        {
+            // Проверяем на самом объекте
+            Consumable item = col.GetComponent<Consumable>();
+            // Если нет — на родителе
+            if (item == null)
+                item = col.GetComponentInParent<Consumable>();
+
+            if (item != null && !nearbyItems.Contains(item))
+            {
+                nearbyItems.Add(item);
+            }
         }
     }
 
@@ -112,7 +123,6 @@ public class PlayerInteraction : MonoBehaviour
             StopCoroutine(drinkingCoroutine);
             drinkingCoroutine = null;
             currentWaterSource = null;
-            Debug.Log("Перестал пить.");
         }
     }
 

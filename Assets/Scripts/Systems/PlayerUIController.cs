@@ -63,6 +63,9 @@ public class PlayerUIController : MonoBehaviour
         {
             deathScreenPanel.SetActive(true);
         }
+        // Показываем курсор чтобы можно было нажать кнопку
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
     
     private void OnPlayerRespawn(PlayerRespawnedEvent e)

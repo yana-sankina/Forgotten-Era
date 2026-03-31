@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class DinosaurAnimator : MonoBehaviour
 {
     private Animator animator;
-    private Rigidbody rb;
+    private PlayerMovement playerMovement;
     private PlayerInput playerInput;
     private HashSet<int> existingParams = new HashSet<int>();
 
@@ -29,7 +29,7 @@ public class DinosaurAnimator : MonoBehaviour
     public void Init(Animator modelAnimator)
     {
         animator = modelAnimator;
-        rb = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>();
 
         if (animator == null || animator.runtimeAnimatorController == null)
@@ -64,29 +64,30 @@ public class DinosaurAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (animator == null || rb == null) return;
+        if (animator == null || playerMovement == null) return;
 
-        // Горизонтальная скорость (0..1)
-        Vector3 hVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        // Скорость из CharacterController
+        Vector3 vel = playerMovement.Velocity;
+        Vector3 hVel = new Vector3(vel.x, 0, vel.z);
         float normalizedSpeed = hVel.magnitude / Mathf.Max(maxSpeed, 0.01f);
         SetFloat(SpeedHash, normalizedSpeed);
 
-        // Бег (Shift зажат + двигается)
+        // Бег
         bool isRunning = playerInput != null && playerInput.IsSprinting && normalizedSpeed > 0.1f;
         SetBool(IsRunningHash, isRunning);
 
-        // Направление поворота (-1 = влево, 0 = прямо, 1 = вправо)
+        // Поворот
         if (playerInput != null)
         {
             SetFloat(TurnSpeedHash, playerInput.MovementInput.x);
         }
 
-        // На земле
-        bool grounded = Mathf.Abs(rb.linearVelocity.y) < 0.1f;
+        // На земле — из CharacterController
+        bool grounded = playerMovement.IsGrounded;
         SetBool(IsGroundedHash, grounded);
 
         // Прыжок: был на земле → оторвался вверх
-        if (wasGrounded && !grounded && rb.linearVelocity.y > 1f)
+        if (wasGrounded && !grounded && vel.y > 1f)
         {
             SetTrigger(JumpHash);
         }

@@ -58,6 +58,14 @@ public class DinosaurSpeciesData : ScriptableObject
     [Tooltip("Сдвиг модели по Y (вниз = отрицательное). Подбери чтобы ноги касались земли.")]
     public float modelYOffset = 0f;
 
+    [Header("CharacterController (размер капсулы)")]
+    [Tooltip("Высота капсулы CharacterController")]
+    public float controllerHeight = 2f;
+    [Tooltip("Радиус капсулы CharacterController")]
+    public float controllerRadius = 0.5f;
+    [Tooltip("Центр капсулы по Y (обычно = height/2)")]
+    public float controllerCenterY = 1f;
+
     /// <summary>
     /// Интерполирует характеристики по проценту роста (0..1).
     /// </summary>

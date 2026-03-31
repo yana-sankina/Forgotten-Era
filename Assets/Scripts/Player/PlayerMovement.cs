@@ -1,27 +1,46 @@
 using UnityEngine;
 
+/// <summary>
+/// Движение игрока на CharacterController.
+/// Не скользит, не застревает, стабильно ходит по склонам.
+/// </summary>
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    private float moveSpeed;
+    private float moveSpeed = 7f;
 
-    [Header("Налаштування")] [SerializeField]
-    private float sprintMultiplier = 2f;
-
+    [Header("Налаштування")]
+    [SerializeField] private float sprintMultiplier = 2f;
     [SerializeField] private float turnSpeed = 7f;
 
-    [Header("Контроль в воздухе")]
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float groundCheckDistance = 0.3f;
-    public LayerMask GroundLayer => groundLayer;
-    public float GroundCheckDistance => groundCheckDistance;
-    [Tooltip("0 = нет управления в воздухе, 1 = полное управление")]
-    [SerializeField] private float airControlFactor = 0.05f;
+    [Header("Гравітація та стрибок")]
+    [SerializeField] private float gravity = -20f;
+    [Tooltip("Маленькая сила вниз чтобы прижимать к земле")]
+    [SerializeField] private float groundStickForce = -2f;
 
-    [Header("Посилання")] [SerializeField] private Transform playerCameraTransform;
+    [Header("Склоны")]
+    [Tooltip("Максимальный угол склона (90 = любой)")]
+    [SerializeField] private float slopeLimit = 89f;
+    [Tooltip("Высота автоподъёма на ступеньки")]
+    [SerializeField] private float stepOffset = 0.5f;
 
-    private Rigidbody rb;
+    [Header("Посилання")]
+    [SerializeField] private Transform playerCameraTransform;
+
+    private CharacterController controller;
     private PlayerInput input;
     private PlayerStamina playerStamina;
+    private Vector3 verticalVelocity;
+
+    /// <summary>Текущая скорость (для аниматора)</summary>
+    public Vector3 Velocity => controller.velocity;
+
+    /// <summary>На земле? (для аниматора и способностей)</summary>
+    public bool IsGrounded => controller.isGrounded;
+
+    // Для обратной совместимости с DinosaurAnimator
+    public LayerMask GroundLayer => default;
+    public float GroundCheckDistance => 0f;
 
     private void OnEnable()
     {
@@ -40,18 +59,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
         input = GetComponent<PlayerInput>();
-
         playerStamina = GetComponent<PlayerStamina>();
 
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        controller.slopeLimit = slopeLimit;
+        controller.stepOffset = stepOffset;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (input == null || playerStamina == null) return;
 
+        // --- Земля ---
+        if (controller.isGrounded && verticalVelocity.y < 0)
+        {
+            // Прижимаем к земле (не отскакиваем)
+            verticalVelocity.y = groundStickForce;
+        }
+
+        // --- Направление ---
         Vector3 camForward = playerCameraTransform.forward;
         Vector3 camRight = playerCameraTransform.right;
         camForward.y = 0;
@@ -62,60 +89,44 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = (camForward * input.MovementInput.y + camRight * input.MovementInput.x);
         moveDirection.Normalize();
 
+        // --- Скорость ---
         bool isSprinting = input.IsSprinting && playerStamina.CanSprint;
-
         float currentSpeed = moveSpeed;
         if (isSprinting)
             currentSpeed *= sprintMultiplier;
 
-        bool grounded = IsGrounded();
+        // --- Горизонтальное движение ---
+        Vector3 horizontalMove = moveDirection * currentSpeed * Time.deltaTime;
 
-        if (grounded)
-        {
-            // На земле — полный контроль
-            rb.linearVelocity = new Vector3(
-                moveDirection.x * currentSpeed,
-                rb.linearVelocity.y,
-                moveDirection.z * currentSpeed
-            );
-        }
-        else
-        {
-            // В воздухе — почти нет контроля, сохраняем инерцию
-            // Спринт ЧАСТИЧНО влияет на прыжок (70% от скорости спринта)
-            float airMaxSpeed = isSprinting ? moveSpeed * sprintMultiplier * 0.7f : moveSpeed;
+        // --- Гравитация ---
+        verticalVelocity.y += gravity * Time.deltaTime;
 
-            Vector3 airVelocity = rb.linearVelocity;
-            airVelocity.x += moveDirection.x * moveSpeed * airControlFactor;
-            airVelocity.z += moveDirection.z * moveSpeed * airControlFactor;
+        // --- Финальное движение ---
+        controller.Move(horizontalMove + verticalVelocity * Time.deltaTime);
 
-            // Ограничиваем горизонтальную скорость
-            Vector2 horizontalVel = new Vector2(airVelocity.x, airVelocity.z);
-            if (horizontalVel.magnitude > airMaxSpeed)
-            {
-                horizontalVel = horizontalVel.normalized * airMaxSpeed;
-            }
-
-            rb.linearVelocity = new Vector3(horizontalVel.x, rb.linearVelocity.y, horizontalVel.y);
-        }
-
-        rb.angularVelocity = Vector3.zero;
-
-        if (moveDirection != Vector3.zero)
+        // --- Поворот ---
+        if (moveDirection.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            Quaternion newRotation = Quaternion.Slerp(rb.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime);
-
-            var eulerRotation = newRotation.eulerAngles;
-            eulerRotation.x = 0;
-            eulerRotation.z = 0;
-
-            rb.MoveRotation(Quaternion.Euler(eulerRotation));
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
     }
 
-    private bool IsGrounded()
+    /// <summary>
+    /// Прыжок. Вызывается из способностей (VelociraptorAbility).
+    /// </summary>
+    public void Jump(float jumpSpeed)
     {
-        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+        Debug.Log($"Jump called! isGrounded={controller.isGrounded}, jumpSpeed={jumpSpeed}");
+        if (controller.isGrounded)
+        {
+            verticalVelocity.y = jumpSpeed;
+            Debug.Log("ПРЫЖОК!");
+        }
     }
+
+    /// <summary>
+    /// Для обратной совместимости. NotifyJump больше не нужен.
+    /// </summary>
+    public void NotifyJump() { }
 }

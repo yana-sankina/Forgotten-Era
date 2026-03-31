@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4031501813542722630
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8148156210950934553, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_Name
+      value: bone-in rib steak 3d model
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -315.22345
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -35.033966
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 590.644
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -553860988396757955, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8148156210950934553, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6311832036755759889}
+    - targetCorrespondingSourceObject: {fileID: -8148156210950934553, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7692417514325915237}
+  m_SourcePrefab: {fileID: -8037938140082288066, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+--- !u!1 &4114366545099944865 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8148156210950934553, guid: bc01674db4eba1e4681e3dff2f73fa5e, type: 3}
+  m_PrefabInstance: {fileID: 4031501813542722630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &6311832036755759889
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4114366545099944865}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.48321533
+  m_Height: 0.99975586
+  m_Direction: 1
+  m_Center: {x: 0.0005722046, y: -0.00012207031, z: -0.00088500977}
+--- !u!114 &-7692417514325915237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4114366545099944865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e29d4f91b2a35884fa971890e9a9a370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  restoreAmountPerBite: 25
+  usesLeft: 5
+  restoreAmountPerTick: 5
+  restoreInterval: 2

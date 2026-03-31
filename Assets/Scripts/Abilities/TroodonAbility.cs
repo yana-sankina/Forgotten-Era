@@ -10,9 +10,7 @@ using System.Collections;
 public class TroodonAbility : MonoBehaviour, IDinosaurAbility
 {
     [Header("Прыжок")]
-    [SerializeField] private float jumpForce = 6f;
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float groundCheckDistance = 0.3f;
+    [SerializeField] private float jumpSpeed = 7f;
 
     [Header("Обострённый слух")]
     [SerializeField] private float abilityCooldown = 15f;
@@ -21,7 +19,7 @@ public class TroodonAbility : MonoBehaviour, IDinosaurAbility
 
     private float cooldownTimer = 0f;
     private PlayerInput playerInput;
-    private Rigidbody rb;
+    private PlayerMovement playerMovement;
 
     public string AbilityName => "Обострённый слух";
     public float Cooldown => abilityCooldown;
@@ -30,18 +28,7 @@ public class TroodonAbility : MonoBehaviour, IDinosaurAbility
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        rb = GetComponent<Rigidbody>();
-
-        // Подтягиваем groundLayer из PlayerMovement (там он уже настроен в инспекторе)
-        if (groundLayer == 0)
-        {
-            var movement = GetComponent<PlayerMovement>();
-            if (movement != null)
-            {
-                groundLayer = movement.GroundLayer;
-                groundCheckDistance = movement.GroundCheckDistance;
-            }
-        }
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -51,10 +38,10 @@ public class TroodonAbility : MonoBehaviour, IDinosaurAbility
 
         if (playerInput == null) return;
 
-        // Прыжок — пассивная механика (общая с велоцираптором)
-        if (playerInput.JumpInput && IsGrounded())
+        // Прыжок — пассивная механика
+        if (playerInput.JumpInput && playerMovement != null)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerMovement.Jump(jumpSpeed);
         }
 
         // Обострённый слух — активная способность
@@ -95,10 +82,5 @@ public class TroodonAbility : MonoBehaviour, IDinosaurAbility
         }
 
         yield return null;
-    }
-
-    private bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
     }
 }

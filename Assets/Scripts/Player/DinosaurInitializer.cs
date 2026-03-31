@@ -63,6 +63,16 @@ public class DinosaurInitializer : MonoBehaviour
 
         switcher.SwitchModel(species.modelPrefab, species.modelYOffset);
 
+        // Подгоняем CharacterController под размер модели
+        CharacterController cc = GetComponent<CharacterController>();
+        if (cc != null)
+        {
+            cc.height = species.controllerHeight;
+            cc.radius = species.controllerRadius;
+            cc.center = new Vector3(0, species.controllerCenterY, 0);
+            Debug.Log($"CharacterController: h={cc.height}, r={cc.radius}, center.y={cc.center.y}");
+        }
+
         // Добавляем DinosaurAnimator и инициализируем его
         Animator modelAnimator = switcher.GetModelAnimator();
         if (modelAnimator != null)

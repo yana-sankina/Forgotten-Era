@@ -28,7 +28,7 @@ public class SpeciesSelectionUI : MonoBehaviour
     [SerializeField] private TMP_Text troodonDescText;
 
     [Header("Настройки")]
-    [SerializeField] private string gameSceneName = "SampleScene";
+    [SerializeField] private string gameSceneName = "GameScene";
 
     private void Start()
     {

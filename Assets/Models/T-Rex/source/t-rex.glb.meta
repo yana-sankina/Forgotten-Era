@@ -1,7 +1,143 @@
 fileFormatVersion: 2
 guid: 256402346dc45fe4092df11636352838
-DefaultImporter:
+ScriptedImporter:
+  internalIDToNameTable: []
   externalObjects: {}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+  script: {fileID: 11500000, guid: 804e1ce4c496647cfa3f1a1134187c71, type: 3}
+  _removeEmptyRootObjects: 1
+  _scaleFactor: 1
+  _deduplicateResources: 0
+  _deduplicatedStatistics:
+    meshCountBefore: 0
+    meshCountAfter: 0
+    textureCountBefore: 0
+    textureCountAfter: 0
+  _maximumLod: 300
+  _readWriteEnabled: 1
+  _generateColliders: 0
+  _addColliders: 0
+  _swapUvs: 0
+  _generateLightmapUVs: 0
+  _importBlendShapeNames: 1
+  _blendShapeFrameWeight:
+    _option: 0
+    _multiplier: 1
+  _importNormals: 0
+  _importTangents: 0
+  _importCamera: 2
+  _importAnimations: 2
+  _mecanimHumanoidFlip: 0
+  _addAnimatorComponent: 0
+  _animationLoopTime: 1
+  _animationLoopPose: 0
+  _importMaterials: 1
+  _enableGpuInstancing: 0
+  _texturesReadWriteEnabled: 1
+  _generateMipMaps: 1
+  _useSceneNameIdentifier: 0
+  _textureCompression: -50
+  _gltfAsset: '<b>Generator: </b>Sketchfab-15.38.0
+
+    <b>Version: </b>2.0
+
+    
+
+    <b>Extras:
+    </b>
+
+'
+  optimizeGameObjects: 0
+  materials:
+  - {fileID: -9024338662293556942, guid: 256402346dc45fe4092df11636352838, type: 3}
+  textures:
+  - {fileID: 6983701643236107813, guid: 256402346dc45fe4092df11636352838, type: 3}
+  - {fileID: 8022499087761476943, guid: 256402346dc45fe4092df11636352838, type: 3}
+  hasSceneData: 1
+  hasAnimationData: 1
+  hasMaterialData: 1
+  hasTextureData: 1
+  animations:
+  - name: walk slow loop
+  - name: bite 90 left
+  - name: bite 90 right
+  - name: bite close left
+  - name: bite close right
+  - name: bite step back forward
+  - name: chase bite left
+  - name: chase bite
+  - name: chase bite right
+  - name: chase head butt left
+  - name: chase roar right
+  - name: chase roar left
+  - name: Chase Roar
+  - name: climb down
+  - name: climb up
+  - name: death
+  - name: death short
+  - name: hit head 1
+  - name: hit head 2
+  - name: hit head 3
+  - name: hit leg
+  - name: hit leg 2
+  - name: hit torso left
+  - name: hit torso right
+  - name: human bite
+  - name: human kill
+  - name: human shake
+  - name: idle attack
+  - name: idle attack to run left
+  - name: idle attack to run right
+  - name: idle investigate
+  - name: idle investigate loop
+  - name: idle investigae out
+  - name: idle sneeze
+  - name: idle to run
+  - name: look forward
+  - name: look forward 2
+  - name: look left
+  - name: look right
+  - name: mama cave bite
+  - name: mama cave bite loop
+  - name: mama cave bite out
+  - name: roar left
+  - name: roar right
+  - name: Big roar step
+  - name: ROAR
+  - name: run head butt right
+  - name: run to stop
+  - name: head butt left
+  - name: run head low
+  - name: run head low 2
+  - name: walk head low
+  - name: run head loop
+  - name: walk loop
+  - name: sprint head left
+  - name: sprint head right
+  - name: sprint loop
+  - name: step back
+  - name: long death
+  - name: stunned
+  - name: kill long
+  - name: turn 90 left
+  - name: turn 90 right
+  - name: turn 180 right
+  - name: turn 180 look
+  - name: turn 180 turn right
+  - name: walk back
+  - name: walk left bite
+  - name: walk right bite
+  - name: walk bite
+  _extensions: []
+  _textures:
+  - texture: {fileID: 6983701643236107813, guid: 256402346dc45fe4092df11636352838, type: 3}
+    shouldBeLinear: 0
+    shouldBeNormalMap: 0
+  - texture: {fileID: 8022499087761476943, guid: 256402346dc45fe4092df11636352838, type: 3}
+    shouldBeLinear: 1
+    shouldBeNormalMap: 1
+  _mainAssetIdentifier: main asset
+  _importPlugins: []
