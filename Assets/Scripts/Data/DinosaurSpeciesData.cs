@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// ScriptableObject — «паспорт» вида динозавра.
 /// Создайте 3 ассета: ПКМ → Create → Dinosaur → Species Data
-/// Заполните поля для T-Rex, Velociraptor и Troodon.
+/// Заполните поля для T-Rex, Dakotaraptor и Pectinodon.
 /// </summary>
 [CreateAssetMenu(fileName = "NewDinosaurSpecies", menuName = "Dinosaur/Species Data")]
 public class DinosaurSpeciesData : ScriptableObject

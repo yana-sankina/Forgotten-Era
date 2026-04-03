@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 123755096}
   - component: {fileID: 123755095}
   m_Layer: 5
-  m_Name: Troodon
+  m_Name: Pectinodon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1616,17 +1616,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tRexData: {fileID: 11400000, guid: 8c49b9abc2b4f284b81b2545c56b4577, type: 2}
-  velociraptorData: {fileID: 11400000, guid: 7b035e764fc5ed3448633ede1615ddd6, type: 2}
-  troodonData: {fileID: 11400000, guid: 6514bc661bb2f07488c8c5538007303f, type: 2}
+  dakotaraptorData: {fileID: 11400000, guid: 7b035e764fc5ed3448633ede1615ddd6, type: 2}
+  pectinodonData: {fileID: 11400000, guid: 6514bc661bb2f07488c8c5538007303f, type: 2}
   tRexButton: {fileID: 1745422177}
-  velociraptorButton: {fileID: 1911667560}
-  troodonButton: {fileID: 123755095}
+  dakotaraptorButton: {fileID: 1911667560}
+  pectinodonButton: {fileID: 123755095}
   tRexNameText: {fileID: 0}
   tRexDescText: {fileID: 0}
-  velociraptorNameText: {fileID: 0}
-  velociraptorDescText: {fileID: 0}
-  troodonNameText: {fileID: 0}
-  troodonDescText: {fileID: 0}
+  dakotaraptorNameText: {fileID: 0}
+  dakotaraptorDescText: {fileID: 0}
+  pectinodonNameText: {fileID: 0}
+  pectinodonDescText: {fileID: 0}
   gameSceneName: GameScene
 --- !u!114 &1563834042
 MonoBehaviour:
@@ -2045,7 +2045,7 @@ GameObject:
   - component: {fileID: 1911667561}
   - component: {fileID: 1911667560}
   m_Layer: 5
-  m_Name: Velociraptor
+  m_Name: Dakotaraptor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -96,9 +96,9 @@ public class DinosaurInitializer : MonoBehaviour
 
         IDinosaurAbility ability = null;
 
-        if (speciesName.Contains("велоцираптор") || speciesName.Contains("velociraptor"))
+        if (speciesName.Contains("дакотараптор") || speciesName.Contains("dakotaraptor"))
         {
-            var comp = gameObject.AddComponent<VelociraptorAbility>();
+            var comp = gameObject.AddComponent<DakotaraptorAbility>();
             ability = comp;
         }
         else if (speciesName.Contains("тиранозавр") || speciesName.Contains("тирекс") || speciesName.Contains("рекс") || speciesName.Contains("tyrannosaurus") || speciesName.Contains("t-rex") || speciesName.Contains("rex"))
@@ -106,9 +106,9 @@ public class DinosaurInitializer : MonoBehaviour
             var comp = gameObject.AddComponent<TyrannosaurusAbility>();
             ability = comp;
         }
-        else if (speciesName.Contains("троодон") || speciesName.Contains("troodon"))
+        else if (speciesName.Contains("пектинодон") || speciesName.Contains("pectinodon"))
         {
-            var comp = gameObject.AddComponent<TroodonAbility>();
+            var comp = gameObject.AddComponent<PectinodonAbility>();
             ability = comp;
         }
         else

@@ -31,7 +31,7 @@ public class Hitbox : MonoBehaviour
     }
 
     /// <summary>
-    /// Атака с кровотечением (Велоцираптор — серповидный удар).
+    /// Атака с кровотечением (Дакотараптор — серповидный удар).
     /// </summary>
     public void ActivateWithBleed(int damage, int bleedDmgPerTick, float bleedDur)
     {
@@ -55,7 +55,16 @@ public class Hitbox : MonoBehaviour
     {
         if (attackDamage > 0 && !hitTargets.Contains(other))
         {
-            if (other.TryGetComponent<Damageable>(out Damageable target))
+            Damageable target = null;
+
+            // Сначала пытаемся найти Damageable на самом collider-объекте.
+            if (!other.TryGetComponent<Damageable>(out target))
+            {
+                // Если collider дочерний — ищем на родителе (частый случай у моделей врагов).
+                target = other.GetComponentInParent<Damageable>();
+            }
+
+            if (target != null)
             {
                 target.TakeDamage(attackDamage);
 

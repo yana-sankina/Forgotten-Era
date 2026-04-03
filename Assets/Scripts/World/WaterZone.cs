@@ -29,12 +29,13 @@ public class WaterZone : MonoBehaviour
         Collider existingCol = GetComponent<Collider>();
         if (existingCol is MeshCollider)
         {
-            // MeshCollider оставляем как есть, добавляем BoxCollider-триггер поверх
+            // MeshCollider нельзя сделать триггером — заменяем на BoxCollider
             BoxCollider triggerCol = gameObject.AddComponent<BoxCollider>();
             triggerCol.isTrigger = true;
-            // Размер подгоняем под MeshCollider
             triggerCol.center = existingCol.bounds.center - transform.position;
             triggerCol.size = existingCol.bounds.size;
+            // Удаляем MeshCollider чтобы CharacterController не ходил по воде
+            Destroy(existingCol);
         }
         else if (existingCol != null)
         {

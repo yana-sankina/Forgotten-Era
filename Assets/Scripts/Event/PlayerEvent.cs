@@ -72,6 +72,17 @@ public struct EntityDetectedEvent
     public float Duration;
 }
 
+public struct EnemyCorpseSpawnedEvent
+{
+    public int InstanceId;
+    public UnityEngine.GameObject CorpseObject;
+}
+
+public struct EnemyCorpseRemovedEvent
+{
+    public int InstanceId;
+}
+
 // === Этап 2: Прокачка ===
 
 public struct GrowthStageReachedEvent

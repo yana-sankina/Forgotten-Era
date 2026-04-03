@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Прыжок. Вызывается из способностей (VelociraptorAbility).
+    /// Прыжок. Вызывается из способностей (DakotaraptorAbility/PectinodonAbility).
     /// </summary>
     public void Jump(float jumpSpeed)
     {

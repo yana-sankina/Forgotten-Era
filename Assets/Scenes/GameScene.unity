@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &5 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6530764182435078953, guid: 957579ed33eb22040bb203c8100f624f, type: 3}
+  m_PrefabInstance: {fileID: 2032562847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &31651123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -462,6 +467,147 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a93f80d252523a14d9206681c7713ce8, type: 3}
+--- !u!1001 &134960023
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 197224676}
+    m_Modifications:
+    - target: {fileID: 425797958840048915, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048915, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_Name
+      value: WaterPlane (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 15.20672
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.17890258
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 15.20672
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -17.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 138.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -429.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 134960027}
+    - targetCorrespondingSourceObject: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 134960026}
+  m_SourcePrefab: {fileID: 100100000, guid: f0702830c1970764693293a91df9e61c, type: 3}
+--- !u!4 &134960024 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+  m_PrefabInstance: {fileID: 134960023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &134960025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+  m_PrefabInstance: {fileID: 134960023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &134960026
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134960025}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: -0.00000023841858, y: 0, z: 0}
+--- !u!114 &134960027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134960025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8152334bd0eb24287bb2f5167a0bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restorePerTick: 5
+  restoreInterval: 1
 --- !u!1 &197224675
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +617,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 197224676}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,6 +638,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1787202443}
+  - {fileID: 1848098027}
+  - {fileID: 134960024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &217421265
@@ -571,11 +719,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403938e4594310b4db2975ce35ade4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7655813589504439368, guid: bfb2766e07e4f6546aca4b14d5474743, type: 3}
+  enemyPrefab: {fileID: 4411827147769527514, guid: 7909a5d971febee438d31cb910ee1e69, type: 3}
+  enemyProfiles:
+  - profile: {fileID: 11400000, guid: e8a4d58d61b03f746b3bf5d2149a7aeb, type: 2}
+    weight: 1
+  - profile: {fileID: 11400000, guid: 2a02750284bc3894dba9513df5c12385, type: 2}
+    weight: 4
+  - profile: {fileID: 11400000, guid: 1604e18d220e6ae4799c440540e77d73, type: 2}
+    weight: 3
   maxEnemies: 2
-  spawnRadius: 10
+  spawnRadius: 50
   respawnTime: 45
   spawnOnStart: 1
+  maxAliveEnemiesOnMap: 20
+  minDistanceFromPlayer: 35
+  minDistanceBetweenEnemies: 20
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 60
+  groundProbeDistance: 140
+  groundOffset: 0.02
+  modelYOffset: -0.2
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
+  disableModelShadows: 1
+  optimizeModelComponents: 1
+  autoFitRootColliderToModel: 1
+  colliderPadding: 0
+  colliderCenterYOffset: -0.15
+  colliderHeightScale: 0.72
+  colliderRadiusScale: 0.32
+  maxAutoColliderHeight: 3.2
+  maxAutoColliderRadius: 1
+--- !u!4 &248245313 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9049806858385359575, guid: 047d05b007fe673408954aea465b4b30, type: 3}
+  m_PrefabInstance: {fileID: 9049806859139231359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &259925386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -740,9 +922,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumablePrefab: {fileID: 4114366545099944865, guid: fe44a57e2f0e9014a84618d1345f22da, type: 3}
   maxItems: 3
-  spawnRadius: 5
+  spawnRadius: 100
   respawnTime: 30
   spawnOnStart: 1
+  limitByGlobalCorpseCount: 1
+  maxCorpsesOnMap: 10
+  minDistanceBetweenItems: 4
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 50
+  groundProbeDistance: 120
+  groundOffset: 0.01
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
 --- !u!1001 &308396468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2383,6 +2577,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1474031241851742189, guid: c7439120b060b624592b9301b7050780, type: 3}
   m_PrefabInstance: {fileID: 1474031242315731251}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &623122858 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 883120403691809223, guid: b47483c1fe9f22546bca092055b64778, type: 3}
+  m_PrefabInstance: {fileID: 883120405572478888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &627597311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2414,9 +2613,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumablePrefab: {fileID: 4114366545099944865, guid: fe44a57e2f0e9014a84618d1345f22da, type: 3}
   maxItems: 3
-  spawnRadius: 5
+  spawnRadius: 100
   respawnTime: 30
   spawnOnStart: 1
+  limitByGlobalCorpseCount: 1
+  maxCorpsesOnMap: 10
+  minDistanceBetweenItems: 4
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 50
+  groundProbeDistance: 120
+  groundOffset: 0.01
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
 --- !u!4 &627597313
 Transform:
   m_ObjectHideFlags: 0
@@ -2615,11 +2826,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2750904053269136279, guid: f011986bc36690b4d934f2708930e3a1, type: 3}
   m_PrefabInstance: {fileID: 2750904053727343630}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &857156776 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9049806858385359575, guid: 047d05b007fe673408954aea465b4b30, type: 3}
-  m_PrefabInstance: {fileID: 9049806859139231359}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &860806534
 PrefabInstance:
@@ -3129,6 +3335,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Directional Light
       objectReference: {fileID: 0}
+    - target: {fileID: 693791063064913, guid: d138ac810bb665444953c4db77425604, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8499798244589909685, guid: d138ac810bb665444953c4db77425604, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3433,11 +3643,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 957579ed33eb22040bb203c8100f624f, type: 3}
---- !u!4 &998813467 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6530764182435078953, guid: 957579ed33eb22040bb203c8100f624f, type: 3}
-  m_PrefabInstance: {fileID: 998813466}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1041810242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3597,9 +3802,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumablePrefab: {fileID: 4114366545099944865, guid: fe44a57e2f0e9014a84618d1345f22da, type: 3}
   maxItems: 3
-  spawnRadius: 5
+  spawnRadius: 100
   respawnTime: 30
   spawnOnStart: 1
+  limitByGlobalCorpseCount: 1
+  maxCorpsesOnMap: 10
+  minDistanceBetweenItems: 4
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 50
+  groundProbeDistance: 120
+  groundOffset: 0.01
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
 --- !u!4 &1064232279
 Transform:
   m_ObjectHideFlags: 0
@@ -3737,11 +3954,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403938e4594310b4db2975ce35ade4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7655813589504439368, guid: bfb2766e07e4f6546aca4b14d5474743, type: 3}
+  enemyPrefab: {fileID: 4411827147769527514, guid: 7909a5d971febee438d31cb910ee1e69, type: 3}
+  enemyProfiles:
+  - profile: {fileID: 11400000, guid: e8a4d58d61b03f746b3bf5d2149a7aeb, type: 2}
+    weight: 1
+  - profile: {fileID: 11400000, guid: 2a02750284bc3894dba9513df5c12385, type: 2}
+    weight: 4
+  - profile: {fileID: 11400000, guid: 1604e18d220e6ae4799c440540e77d73, type: 2}
+    weight: 3
   maxEnemies: 2
-  spawnRadius: 10
+  spawnRadius: 50
   respawnTime: 45
   spawnOnStart: 1
+  maxAliveEnemiesOnMap: 20
+  minDistanceFromPlayer: 35
+  minDistanceBetweenEnemies: 20
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 60
+  groundProbeDistance: 140
+  groundOffset: 0.02
+  modelYOffset: -0.2
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
+  disableModelShadows: 1
+  optimizeModelComponents: 1
+  autoFitRootColliderToModel: 1
+  colliderPadding: 0
+  colliderCenterYOffset: -0.15
+  colliderHeightScale: 0.72
+  colliderRadiusScale: 0.32
+  maxAutoColliderHeight: 3.2
+  maxAutoColliderRadius: 1
 --- !u!1001 &1106459140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4308,6 +4554,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7223576992439528571, guid: f611d77947a7ec74692548d60ef94887, type: 3}
   m_PrefabInstance: {fileID: 1267149531}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1362385107 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6530764182435078953, guid: 957579ed33eb22040bb203c8100f624f, type: 3}
+  m_PrefabInstance: {fileID: 998813466}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1434029545
 PrefabInstance:
@@ -5929,10 +6180,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 857156776}
-  - {fileID: 2012794479}
   - {fileID: 1924216821}
   - {fileID: 610809566}
+  - {fileID: 248245313}
+  - {fileID: 623122858}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1784718779
@@ -6048,9 +6299,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumablePrefab: {fileID: 4114366545099944865, guid: fe44a57e2f0e9014a84618d1345f22da, type: 3}
   maxItems: 3
-  spawnRadius: 5
+  spawnRadius: 100
   respawnTime: 30
   spawnOnStart: 1
+  limitByGlobalCorpseCount: 1
+  maxCorpsesOnMap: 10
+  minDistanceBetweenItems: 4
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 50
+  groundProbeDistance: 120
+  groundOffset: 0.01
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
 --- !u!4 &1785003902
 Transform:
   m_ObjectHideFlags: 0
@@ -6235,6 +6498,147 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -49.687, z: 0}
+--- !u!1001 &1848098026
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 197224676}
+    m_Modifications:
+    - target: {fileID: 425797958840048915, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048915, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_Name
+      value: WaterPlane (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 49.054565
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.36365
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 62.967224
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 407.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 125.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -55.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1848098030}
+    - targetCorrespondingSourceObject: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1848098029}
+  m_SourcePrefab: {fileID: 100100000, guid: f0702830c1970764693293a91df9e61c, type: 3}
+--- !u!4 &1848098027 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 425797958840048917, guid: f0702830c1970764693293a91df9e61c, type: 3}
+  m_PrefabInstance: {fileID: 1848098026}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1848098028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+  m_PrefabInstance: {fileID: 1848098026}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1848098029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848098028}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: -0.00000023841858, y: 0, z: 0}
+--- !u!114 &1848098030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848098028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8152334bd0eb24287bb2f5167a0bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restorePerTick: 5
+  restoreInterval: 1
 --- !u!1001 &1882469013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6618,11 +7022,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6530764182435078953, guid: 957579ed33eb22040bb203c8100f624f, type: 3}
   m_PrefabInstance: {fileID: 1987837938}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2012794479 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 883120403691809223, guid: b47483c1fe9f22546bca092055b64778, type: 3}
-  m_PrefabInstance: {fileID: 883120405572478888}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2022485267
 GameObject:
   m_ObjectHideFlags: 0
@@ -6654,9 +7053,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumablePrefab: {fileID: 4114366545099944865, guid: fe44a57e2f0e9014a84618d1345f22da, type: 3}
   maxItems: 3
-  spawnRadius: 5
+  spawnRadius: 100
   respawnTime: 30
   spawnOnStart: 1
+  limitByGlobalCorpseCount: 1
+  maxCorpsesOnMap: 10
+  minDistanceBetweenItems: 4
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 50
+  groundProbeDistance: 120
+  groundOffset: 0.01
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
 --- !u!4 &2022485269
 Transform:
   m_ObjectHideFlags: 0
@@ -6807,11 +7218,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 957579ed33eb22040bb203c8100f624f, type: 3}
---- !u!4 &2032562848 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6530764182435078953, guid: 957579ed33eb22040bb203c8100f624f, type: 3}
-  m_PrefabInstance: {fileID: 2032562847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2040433185
 GameObject:
   m_ObjectHideFlags: 0
@@ -6843,9 +7249,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumablePrefab: {fileID: 4114366545099944865, guid: fe44a57e2f0e9014a84618d1345f22da, type: 3}
   maxItems: 3
-  spawnRadius: 5
+  spawnRadius: 100
   respawnTime: 30
   spawnOnStart: 1
+  limitByGlobalCorpseCount: 1
+  maxCorpsesOnMap: 10
+  minDistanceBetweenItems: 4
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 50
+  groundProbeDistance: 120
+  groundOffset: 0.01
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
 --- !u!4 &2040433187
 Transform:
   m_ObjectHideFlags: 0
@@ -6905,11 +7323,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403938e4594310b4db2975ce35ade4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7655813589504439368, guid: bfb2766e07e4f6546aca4b14d5474743, type: 3}
+  enemyPrefab: {fileID: 4411827147769527514, guid: 7909a5d971febee438d31cb910ee1e69, type: 3}
+  enemyProfiles:
+  - profile: {fileID: 11400000, guid: e8a4d58d61b03f746b3bf5d2149a7aeb, type: 2}
+    weight: 1
+  - profile: {fileID: 11400000, guid: 2a02750284bc3894dba9513df5c12385, type: 2}
+    weight: 3
+  - profile: {fileID: 11400000, guid: 1604e18d220e6ae4799c440540e77d73, type: 2}
+    weight: 2
   maxEnemies: 2
-  spawnRadius: 10
+  spawnRadius: 50
   respawnTime: 45
   spawnOnStart: 1
+  maxAliveEnemiesOnMap: 20
+  minDistanceFromPlayer: 35
+  minDistanceBetweenEnemies: 20
+  spawnPointSearchAttempts: 20
+  groundProbeHeight: 60
+  groundProbeDistance: 140
+  groundOffset: 0.02
+  modelYOffset: -0.2
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  preferTerrainHeight: 1
+  minGroundNormalY: 0.6
+  disableModelShadows: 1
+  optimizeModelComponents: 1
+  autoFitRootColliderToModel: 1
+  colliderPadding: 0
+  colliderCenterYOffset: -0.15
+  colliderHeightScale: 0.72
+  colliderRadiusScale: 0.32
+  maxAutoColliderHeight: 3.2
+  maxAutoColliderRadius: 1
 --- !u!1 &2102009158
 GameObject:
   m_ObjectHideFlags: 0
@@ -6944,7 +7391,7 @@ Transform:
   - {fileID: 1106459141}
   - {fileID: 1987837939}
   - {fileID: 1041810243}
-  - {fileID: 998813467}
+  - {fileID: 1362385107}
   - {fileID: 1498541646}
   - {fileID: 670502343}
   - {fileID: 992462424}
@@ -6968,7 +7415,7 @@ Transform:
   - {fileID: 1911526308}
   - {fileID: 314510443}
   - {fileID: 1701202546}
-  - {fileID: 2032562848}
+  - {fileID: 5}
   - {fileID: 325699828}
   - {fileID: 381785113}
   - {fileID: 390161314}
@@ -7189,6 +7636,10 @@ PrefabInstance:
     - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
       propertyPath: m_Name
       value: WaterPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
+      propertyPath: m_Layer
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 425797958840048916, guid: f0702830c1970764693293a91df9e61c, type: 3}
       propertyPath: m_StaticEditorFlags

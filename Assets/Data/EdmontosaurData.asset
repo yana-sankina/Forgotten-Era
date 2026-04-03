@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee13af5b0b504c4f9a465ba6bb9a42b, type: 3}
+  m_Name: EdmontosaurData
+  m_EditorClassIdentifier: 
+  enemyTypeName: Edmontosaur
+  modelPrefab: {fileID: 6150501439813810449, guid: 6937a12ab731447418350157bb32e97e, type: 3}
+  minScale: 0.8
+  maxScale: 1.4
+  minHP: 60
+  maxHP: 250
+  minAttack: 20
+  maxAttack: 180
+  minXPReward: 35
+  maxXPReward: 60
+  minCorpseUses: 3
+  maxCorpseUses: 8
+  corpseLifetimeSeconds: 600
