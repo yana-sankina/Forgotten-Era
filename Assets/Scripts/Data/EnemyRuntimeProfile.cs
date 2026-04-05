@@ -13,6 +13,10 @@ public class EnemyRuntimeProfile : ScriptableObject
     [Header("Визуал")]
     [Tooltip("Модель, которая будет натянута на врага в рантайме")]
     public GameObject modelPrefab;
+    [Tooltip("Быстрый разворот модели на 180° по Y")]
+    public bool flipForward = false;
+    [Tooltip("Локальный поворот модели (если импортирована не в ту сторону)")]
+    public Vector3 modelLocalEulerOffset = Vector3.zero;
 
     [Header("Масштаб модели")]
     [Min(0.1f)] public float minScale = 0.8f;
@@ -30,6 +34,47 @@ public class EnemyRuntimeProfile : ScriptableObject
     [Min(1)] public int minCorpseUses = 3;
     [Min(1)] public int maxCorpseUses = 6;
     [Min(1f)] public float corpseLifetimeSeconds = 600f; // ~10 минут
+
+    [Header("AI (NavMesh + FSM)")]
+    [Min(0f)] public float patrolRadius = 12f;
+    [Min(0.1f)] public float patrolPointTimeout = 6f;
+
+    [Min(0f)] public float detectionRadius = 20f;
+    [Min(0f)] public float loseTargetRadius = 28f;
+    [Min(0f)] public float loseTargetDelaySeconds = 2f;
+
+    [Min(0f)] public float patrolSpeed = 3.5f;
+    [Min(0f)] public float chaseSpeed = 5.5f;
+    [Min(0f)] public float fleeSpeed = 6.5f;
+
+    [Min(0f)] public float attackRange = 2.2f;
+    [Tooltip("Чтобы бот не дёргался на границе attackRange (гистерезис)")]
+    [Min(0f)] public float attackRangeHysteresis = 0.6f;
+    [Min(0.01f)] public float attackDuration = 0.25f;
+    [Min(0.01f)] public float attackCooldown = 1.0f;
+    [Min(0f)] public float attackTurnSpeed = 8f;
+    [Tooltip("Пауза после удара, в течение которой враг доворачивается медленнее.")]
+    [Min(0f)] public float postAttackTurnDelay = 0.35f;
+    [Tooltip("Ускорение набора скорости поворота в атаке.")]
+    [Min(0f)] public float attackTurnAcceleration = 18f;
+    [Tooltip("Базовый множитель скорости поворота в атаке.")]
+    [Min(0f)] public float attackTurnSpeedMultiplier = 0.35f;
+    [Tooltip("Множитель поворота во время recovery-паузы после удара.")]
+    [Range(0f, 1f)] public float recoveryTurnSpeedMultiplier = 0.25f;
+    [Tooltip("Минимальная длительность активного окна hitbox (сек).")]
+    [Min(0.01f)] public float minAttackWindowDuration = 0.4f;
+    [Tooltip("Минимальное время в каждом цикле атаки, когда враг может довернуться.")]
+    [Min(0f)] public float minFreeTurnTimeBeforeNextSwing = 0.25f;
+
+    [Range(0f, 1f)] public float fleeHpThreshold = 0.5f;
+    [Min(0.1f)] public float fleeDuration = 4f;
+    [Range(0f, 1f)] public float reengageHpThreshold = 0.65f;
+    [Min(0f)] public float fleeDistance = 12f;
+    [Min(0.1f)] public float fleePickRadius = 6f;
+
+    [Header("AI Debug")]
+    [Tooltip("Включить диагностические логи FSM/ударов для этого типа врага.")]
+    public bool enableDebugLogs = false;
 
     public float GetRandomScale()
     {

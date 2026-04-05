@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTypeName: Edmontosaur
   modelPrefab: {fileID: 6150501439813810449, guid: 6937a12ab731447418350157bb32e97e, type: 3}
+  flipForward: 0
+  modelLocalEulerOffset: {x: 0, y: 0, z: 0}
   minScale: 0.8
   maxScale: 1.4
   minHP: 60
@@ -25,3 +27,28 @@ MonoBehaviour:
   minCorpseUses: 3
   maxCorpseUses: 8
   corpseLifetimeSeconds: 600
+  patrolRadius: 12
+  patrolPointTimeout: 6
+  detectionRadius: 20
+  loseTargetRadius: 28
+  loseTargetDelaySeconds: 2
+  patrolSpeed: 3.5
+  chaseSpeed: 5.5
+  fleeSpeed: 6.5
+  attackRange: 2.2
+  attackRangeHysteresis: 0.6
+  attackDuration: 0.25
+  attackCooldown: 1
+  attackTurnSpeed: 2
+  postAttackTurnDelay: 0.35
+  attackTurnAcceleration: 12
+  attackTurnSpeedMultiplier: 0.24
+  recoveryTurnSpeedMultiplier: 0.3
+  minAttackWindowDuration: 0.45
+  minFreeTurnTimeBeforeNextSwing: 0.35
+  fleeHpThreshold: 0.5
+  fleeDuration: 4
+  reengageHpThreshold: 0.65
+  fleeDistance: 12
+  fleePickRadius: 6
+  enableDebugLogs: 0

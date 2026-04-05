@@ -19,12 +19,31 @@ public class EnemyHitbox : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
+        TryDealDamage(other);
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        // Фоллбек: если коллайдер уже пересекался в момент включения хитбокса,
+        // OnTriggerEnter может не прийти в этот же кадр.
+        TryDealDamage(other);
+    }
+
+    private void TryDealDamage(Collider other)
+    {
         if (hitTargets.Contains(other))
         {
             return;
         }
-        
-        if (other.TryGetComponent<PlayerHealth>(out PlayerHealth player))
+
+        PlayerHealth player = null;
+        if (!other.TryGetComponent<PlayerHealth>(out player))
+        {
+            // Часто коллайдер висит на дочернем объекте игрока.
+            player = other.GetComponentInParent<PlayerHealth>();
+        }
+
+        if (player != null)
         {
             Debug.LogWarning("Игрок получил " + attackDamage + " урона!");
             player.TakeDamage(attackDamage);

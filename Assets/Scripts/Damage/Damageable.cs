@@ -17,6 +17,9 @@ public class Damageable : MonoBehaviour
     public bool IsCorpse { get; private set; } = false;
     public bool IsStunned { get; private set; } = false;
 
+    public int MaxHP => maxHP;
+    public int CurrentHP => currentHP;
+
     public event Action<Damageable> Died;
 
     private Coroutine bleedCoroutine;

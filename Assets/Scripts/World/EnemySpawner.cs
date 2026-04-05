@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 /// <summary>
@@ -75,6 +76,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float colliderHeightScale = 0.8f;
     [Tooltip("Множитель радиуса авто-коллайдера")]
     [SerializeField] private float colliderRadiusScale = 0.4f;
+    [Tooltip("Минимальный множитель радиуса авто-коллайдера (защита от слишком узкого hit-объёма)")]
+    [SerializeField] private float minColliderRadiusScale = 0.36f;
     [Tooltip("Ограничение максимальной высоты авто-коллайдера")]
     [SerializeField] private float maxAutoColliderHeight = 6f;
     [Tooltip("Ограничение максимального радиуса авто-коллайдера")]
@@ -161,9 +164,12 @@ public class EnemySpawner : MonoBehaviour
         if (lifecycle == null)
             lifecycle = enemy.AddComponent<EnemyLifecycle>();
 
-        // Если профиль не задан, оставляем базовые значения префаба.
+        // Если профиль не задан, оставляем базовые значения префаба, но AI всё равно подключаем.
         if (profile == null)
+        {
+            ConfigureEnemyAI(enemy, null);
             return;
+        }
 
         float scale = profile.GetRandomScale();
         enemy.transform.localScale = enemy.transform.localScale * scale;
@@ -176,8 +182,9 @@ public class EnemySpawner : MonoBehaviour
 
         damageable.SetRuntimeStats(hp, xp);
         ApplyAttackDamage(enemy, attack);
-        ApplyVisualModel(enemy, profile.modelPrefab);
+        ApplyVisualModel(enemy, profile);
         lifecycle.ConfigureCorpse(profile.corpseLifetimeSeconds, corpseUses);
+        ConfigureEnemyAI(enemy, profile);
     }
 
     private void ApplyAttackDamage(GameObject enemy, int attackDamage)
@@ -189,13 +196,135 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void ApplyVisualModel(GameObject enemy, GameObject modelPrefab)
+    private void ConfigureEnemyAI(GameObject enemy, EnemyRuntimeProfile profile)
     {
+        if (enemy == null)
+            return;
+
+        if (playerTransform == null)
+            CachePlayerTransform();
+
+        // Disable legacy attack loop to avoid double-attacks.
+        DummyAttackSpam[] legacyLoops = enemy.GetComponentsInChildren<DummyAttackSpam>(true);
+        for (int i = 0; i < legacyLoops.Length; i++)
+        {
+            legacyLoops[i].enabled = false;
+        }
+
+        // Ensure NavMeshAgent exists and is roughly aligned with the root collider.
+        NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
+        if (agent == null)
+            agent = enemy.AddComponent<NavMeshAgent>();
+
+        ConfigureAgentFromCollider(agent, enemy, profile);
+        EnsureAgentOnNavMesh(agent);
+
+        // Make sure hitbox is OFF by default; AI will enable it only during attack windows.
+        EnemyHitbox[] hitboxes = enemy.GetComponentsInChildren<EnemyHitbox>(true);
+        AlignHitboxesForward(hitboxes);
+        for (int i = 0; i < hitboxes.Length; i++)
+        {
+            EnemyHitbox hb = hitboxes[i];
+            if (hb == null) continue;
+
+            if (hb.gameObject != enemy)
+            {
+                hb.gameObject.SetActive(false);
+            }
+            else
+            {
+                // Worst-case: if user put hitbox on the root object, don't disable the whole enemy.
+                hb.enabled = false;
+            }
+        }
+
+        EnemyAI ai = enemy.GetComponent<EnemyAI>();
+        if (ai == null)
+            ai = enemy.AddComponent<EnemyAI>();
+
+        ai.Configure(profile, playerTransform, hitboxes);
+    }
+
+    private void AlignHitboxesForward(EnemyHitbox[] hitboxes)
+    {
+        if (hitboxes == null || hitboxes.Length == 0)
+            return;
+
+        for (int i = 0; i < hitboxes.Length; i++)
+        {
+            EnemyHitbox hb = hitboxes[i];
+            if (hb == null) continue;
+
+            Transform t = hb.transform;
+            Vector3 lp = t.localPosition;
+
+            // Унифицируем направление удара: hitbox должен быть перед root-врагом (local +Z).
+            // Это устраняет кейс, когда часть типов не бьёт из-за исходного смещения hitbox "назад".
+            if (Mathf.Abs(lp.z) >= Mathf.Abs(lp.x))
+            {
+                lp.z = Mathf.Abs(lp.z);
+            }
+
+            t.localPosition = lp;
+        }
+    }
+
+    private void ConfigureAgentFromCollider(NavMeshAgent agent, GameObject enemy, EnemyRuntimeProfile profile)
+    {
+        if (agent == null || enemy == null)
+            return;
+
+        // Keep the agent from trying to stand inside the player.
+        float attackRange = (profile != null) ? profile.attackRange : 1.5f;
+        agent.stoppingDistance = Mathf.Max(0f, attackRange * 0.85f);
+
+        CapsuleCollider capsule = enemy.GetComponent<CapsuleCollider>();
+        if (capsule != null)
+        {
+            agent.radius = Mathf.Max(0.05f, capsule.radius);
+            agent.height = Mathf.Max(agent.radius * 2f, capsule.height);
+            float feetOffset = capsule.center.y - (capsule.height * 0.5f);
+            agent.baseOffset = Mathf.Max(0f, feetOffset);
+            return;
+        }
+
+        BoxCollider box = enemy.GetComponent<BoxCollider>();
+        if (box != null)
+        {
+            float radius = Mathf.Max(0.05f, Mathf.Max(box.size.x, box.size.z) * 0.5f);
+            agent.radius = radius;
+            agent.height = Mathf.Max(radius * 2f, box.size.y);
+            float feetOffset = box.center.y - (box.size.y * 0.5f);
+            agent.baseOffset = Mathf.Max(0f, feetOffset);
+        }
+    }
+
+    private void EnsureAgentOnNavMesh(NavMeshAgent agent)
+    {
+        if (agent == null)
+            return;
+
+        if (agent.isOnNavMesh)
+            return;
+
+        if (NavMesh.SamplePosition(agent.transform.position, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position);
+        }
+    }
+
+    private void ApplyVisualModel(GameObject enemy, EnemyRuntimeProfile profile)
+    {
+        if (profile == null) return;
+        GameObject modelPrefab = profile.modelPrefab;
         if (modelPrefab == null) return;
 
         GameObject modelInstance = Instantiate(modelPrefab, enemy.transform);
         modelInstance.transform.localPosition = new Vector3(0f, modelYOffset, 0f);
-        modelInstance.transform.localRotation = Quaternion.identity;
+        float flipY = profile.flipForward ? 180f : 0f;
+        Vector3 modelEuler = profile.modelLocalEulerOffset;
+        modelEuler.y += flipY;
+        modelInstance.transform.localRotation = Quaternion.Euler(modelEuler);
 
         Collider[] modelColliders = modelInstance.GetComponentsInChildren<Collider>(true);
         for (int i = 0; i < modelColliders.Length; i++)
@@ -272,7 +401,8 @@ public class EnemySpawner : MonoBehaviour
         {
             capsule.direction = 1; // Y-axis
             capsule.center = localCenter;
-            float scaledRadius = Mathf.Max(size.x, size.z) * 0.5f * Mathf.Max(0.1f, colliderRadiusScale);
+            float radiusScale = Mathf.Max(0.1f, Mathf.Max(colliderRadiusScale, minColliderRadiusScale));
+            float scaledRadius = Mathf.Max(size.x, size.z) * 0.5f * radiusScale;
             float scaledHeight = size.y * Mathf.Max(0.1f, colliderHeightScale);
             capsule.radius = Mathf.Clamp(scaledRadius, 0.05f, Mathf.Max(0.05f, maxAutoColliderRadius));
             capsule.height = Mathf.Clamp(scaledHeight, capsule.radius * 2f, Mathf.Max(capsule.radius * 2f, maxAutoColliderHeight));
@@ -289,7 +419,8 @@ public class EnemySpawner : MonoBehaviour
         if (rootCollider is SphereCollider sphere)
         {
             sphere.center = localCenter;
-            float scaledRadius = Mathf.Max(size.x, Mathf.Max(size.y, size.z)) * 0.5f * Mathf.Max(0.1f, colliderRadiusScale);
+            float radiusScale = Mathf.Max(0.1f, Mathf.Max(colliderRadiusScale, minColliderRadiusScale));
+            float scaledRadius = Mathf.Max(size.x, Mathf.Max(size.y, size.z)) * 0.5f * radiusScale;
             sphere.radius = Mathf.Clamp(scaledRadius, 0.05f, Mathf.Max(0.05f, maxAutoColliderRadius));
         }
     }
@@ -448,6 +579,20 @@ public class EnemySpawner : MonoBehaviour
 
     private void CachePlayerTransform()
     {
+        if (playerTransform != null)
+            return;
+
+#if UNITY_2023_1_OR_NEWER
+        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>(FindObjectsInactive.Exclude);
+#else
+        PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+#endif
+        if (playerHealth != null)
+        {
+            playerTransform = playerHealth.transform;
+            return;
+        }
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
             playerTransform = player.transform;
