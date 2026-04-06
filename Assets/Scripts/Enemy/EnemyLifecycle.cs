@@ -91,11 +91,6 @@ public class EnemyLifecycle : MonoBehaviour
 
     private void DisableCombatBehaviours()
     {
-        DummyAttackSpam[] attackLoops = GetComponentsInChildren<DummyAttackSpam>(true);
-        for (int i = 0; i < attackLoops.Length; i++)
-        {
-            attackLoops[i].enabled = false;
-        }
 
         EnemyHitbox[] hitboxes = GetComponentsInChildren<EnemyHitbox>(true);
         for (int i = 0; i < hitboxes.Length; i++)

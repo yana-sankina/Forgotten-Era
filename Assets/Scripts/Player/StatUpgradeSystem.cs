@@ -37,14 +37,14 @@ public class StatUpgradeSystem : MonoBehaviour
     private void OnStageReached(GrowthStageReachedEvent e)
     {
         availablePoints += e.BonusPoints;
-        Debug.Log("Стадия " + e.StageIndex + "! +" + e.BonusPoints + " очков (всего: " + availablePoints + ")");
+
         PublishPointsEvent();
     }
 
     private void OnLevelUp(LevelUpEvent e)
     {
         availablePoints += e.StatPoints;
-        Debug.Log("Level Up → +" + e.StatPoints + " очков (всего: " + availablePoints + ")");
+
         PublishPointsEvent();
     }
 
@@ -53,7 +53,7 @@ public class StatUpgradeSystem : MonoBehaviour
         if (availablePoints <= 0) return false;
         availablePoints--;
         bonusHP += hpPerPoint;
-        Debug.Log("Прокачка HP! +" + hpPerPoint + " (бонус: " + bonusHP + ")");
+
         PublishAll();
         return true;
     }
@@ -63,7 +63,7 @@ public class StatUpgradeSystem : MonoBehaviour
         if (availablePoints <= 0) return false;
         availablePoints--;
         bonusATK += atkPerPoint;
-        Debug.Log("Прокачка ATK! +" + atkPerPoint + " (бонус: " + bonusATK + ")");
+
         PublishAll();
         return true;
     }
@@ -73,7 +73,7 @@ public class StatUpgradeSystem : MonoBehaviour
         if (availablePoints <= 0) return false;
         availablePoints--;
         bonusSPD += spdPerPoint;
-        Debug.Log("Прокачка SPD! +" + spdPerPoint + " (бонус: " + bonusSPD + ")");
+
         PublishAll();
         return true;
     }

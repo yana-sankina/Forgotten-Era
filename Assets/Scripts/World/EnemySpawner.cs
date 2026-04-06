@@ -204,13 +204,6 @@ public class EnemySpawner : MonoBehaviour
         if (playerTransform == null)
             CachePlayerTransform();
 
-        // Disable legacy attack loop to avoid double-attacks.
-        DummyAttackSpam[] legacyLoops = enemy.GetComponentsInChildren<DummyAttackSpam>(true);
-        for (int i = 0; i < legacyLoops.Length; i++)
-        {
-            legacyLoops[i].enabled = false;
-        }
-
         // Ensure NavMeshAgent exists and is roughly aligned with the root collider.
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
         if (agent == null)
@@ -343,6 +336,14 @@ public class EnemySpawner : MonoBehaviour
             {
                 renderer.enabled = false;
             }
+    }
+
+        // Если у модели есть Animator с контроллером — синхронизируем с NavMeshAgent
+        Animator modelAnimator = modelInstance.GetComponentInChildren<Animator>();
+        if (modelAnimator != null && modelAnimator.runtimeAnimatorController != null)
+        {
+            if (enemy.GetComponent<EnemyAnimatorSync>() == null)
+                enemy.AddComponent<EnemyAnimatorSync>();
         }
     }
 

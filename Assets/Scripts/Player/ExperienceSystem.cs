@@ -45,7 +45,7 @@ public class ExperienceSystem : MonoBehaviour
     public void AddXP(int amount)
     {
         currentXP += amount;
-        Debug.Log("+" + amount + " XP! Всего: " + currentXP + "/" + XPToNextLevel);
+
 
         // Проверяем левел-апы (может быть несколько за раз)
         while (currentXP >= XPToNextLevel)
@@ -53,7 +53,7 @@ public class ExperienceSystem : MonoBehaviour
             currentXP -= XPToNextLevel;
             currentLevel++;
 
-            Debug.Log("LEVEL UP! Уровень " + currentLevel + "! +" + statPointsPerLevel + " очков");
+
 
             EventBroker.Publish(new LevelUpEvent
             {

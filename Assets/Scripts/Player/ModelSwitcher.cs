@@ -42,7 +42,6 @@ public class ModelSwitcher : MonoBehaviour
             Destroy(col);
         }
 
-        Debug.Log("Модель загружена: " + modelPrefab.name);
     }
 
     /// <summary>

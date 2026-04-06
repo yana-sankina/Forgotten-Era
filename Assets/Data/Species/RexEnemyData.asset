@@ -37,8 +37,8 @@ MonoBehaviour:
   fleeSpeed: 6.5
   attackRange: 2.2
   attackRangeHysteresis: 0.6
-  attackDuration: 0.25
-  attackCooldown: 1
+  attackDuration: 0.3
+  attackCooldown: 2
   attackTurnSpeed: 2
   postAttackTurnDelay: 0.45
   attackTurnAcceleration: 9

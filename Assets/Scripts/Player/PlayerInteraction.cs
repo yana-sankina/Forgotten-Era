@@ -81,13 +81,11 @@ public class PlayerInteraction : MonoBehaviour
 
         if (playerNeeds.CurrentHunger >= playerNeeds.maxHunger)
         {
-            Debug.Log("Я не голоден!");
             return;
         }
 
         playerNeeds.Eat(closestItem.restoreAmountPerBite);
         closestItem.usesLeft--;
-        Debug.Log("Укусил. Осталось укусов: " + closestItem.usesLeft);
 
         if (closestItem.usesLeft <= 0)
         {
@@ -108,7 +106,6 @@ public class PlayerInteraction : MonoBehaviour
 
         if (playerNeeds.CurrentThirst >= playerNeeds.maxThirst)
         {
-            Debug.Log("Я не хочу пить!");
             return;
         }
 
@@ -134,7 +131,6 @@ public class PlayerInteraction : MonoBehaviour
 
             if (playerNeeds.CurrentThirst >= playerNeeds.maxThirst)
             {
-                Debug.Log("Напился!");
                 TryStopDrinking();
                 yield break;
             }

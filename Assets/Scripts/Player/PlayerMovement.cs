@@ -40,9 +40,7 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>На земле? (для аниматора и способностей)</summary>
     public bool IsGrounded => controller.isGrounded;
 
-    // Для обратной совместимости с DinosaurAnimator
-    public LayerMask GroundLayer => default;
-    public float GroundCheckDistance => 0f;
+
 
     private void OnEnable()
     {
@@ -129,16 +127,9 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void Jump(float jumpSpeed)
     {
-        Debug.Log($"Jump called! isGrounded={controller.isGrounded}, jumpSpeed={jumpSpeed}");
         if (controller.isGrounded)
         {
             verticalVelocity.y = jumpSpeed;
-            Debug.Log("ПРЫЖОК!");
         }
     }
-
-    /// <summary>
-    /// Для обратной совместимости. NotifyJump больше не нужен.
-    /// </summary>
-    public void NotifyJump() { }
 }

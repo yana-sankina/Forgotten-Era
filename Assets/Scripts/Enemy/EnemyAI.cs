@@ -50,6 +50,10 @@ public class EnemyAI : MonoBehaviour
 
     private Vector3 currentMoveTarget;
     private bool hasMoveTarget;
+    private bool isAttacking;
+
+    /// <summary>true когда хитбокс активен (для анимации атаки)</summary>
+    public bool IsAttacking => isAttacking;
 
     public void Configure(EnemyRuntimeProfile runtimeProfile, Transform playerTransform, EnemyHitbox[] hitboxes)
     {
@@ -490,6 +494,8 @@ public class EnemyAI : MonoBehaviour
 
     private void SetHitboxActive(bool active)
     {
+        isAttacking = active;
+
         if (enemyHitboxes == null || enemyHitboxes.Length == 0)
             return;
 

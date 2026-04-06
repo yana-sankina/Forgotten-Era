@@ -1,0 +1,84 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+/// <summary>
+/// Процедурная анимация ходьбы для врагов без анимационных клипов.
+/// Покачивает и подпрыгивает модель при движении — создаёт иллюзию "ходьбы".
+/// Вешается на корень врага, двигает дочернюю модель.
+/// </summary>
+public class ProceduralWalkAnimation : MonoBehaviour
+{
+    [Header("Ссылки")]
+    [Tooltip("Дочерний объект модели. Если пусто — ищет первый дочерний.")]
+    [SerializeField] private Transform modelTransform;
+
+    [Header("Покачивание (боковой наклон)")]
+    [SerializeField] private float swayAngle = 5f;
+    [SerializeField] private float swaySpeed = 8f;
+
+    [Header("Подпрыгивание (вверх-вниз)")]
+    [SerializeField] private float bobHeight = 0.05f;
+    [SerializeField] private float bobSpeed = 12f;
+
+    [Header("Кивок (вперёд-назад наклон головы)")]
+    [SerializeField] private float nodAngle = 3f;
+    [SerializeField] private float nodSpeed = 10f;
+
+    [Header("Порог скорости")]
+    [Tooltip("Минимальная скорость NavMeshAgent чтобы анимация играла")]
+    [SerializeField] private float minSpeedThreshold = 0.3f;
+
+    private NavMeshAgent agent;
+    private Vector3 baseLocalPosition;
+    private Quaternion baseLocalRotation;
+    private float phase;
+
+    private void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+
+        if (modelTransform == null && transform.childCount > 0)
+        {
+            modelTransform = transform.GetChild(0);
+        }
+
+        if (modelTransform != null)
+        {
+            baseLocalPosition = modelTransform.localPosition;
+            baseLocalRotation = modelTransform.localRotation;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (modelTransform == null || agent == null)
+            return;
+
+        float speed = agent.velocity.magnitude;
+        float intensity = Mathf.Clamp01((speed - minSpeedThreshold) / Mathf.Max(0.1f, agent.speed));
+
+        if (intensity < 0.01f)
+        {
+            // Стоим — плавно возвращаемся в исходную позу
+            modelTransform.localPosition = Vector3.Lerp(modelTransform.localPosition, baseLocalPosition, Time.deltaTime * 8f);
+            modelTransform.localRotation = Quaternion.Slerp(modelTransform.localRotation, baseLocalRotation, Time.deltaTime * 8f);
+            return;
+        }
+
+        // Фаза анимации — ускоряется с агентом
+        float speedMultiplier = Mathf.Lerp(0.5f, 1.5f, intensity);
+        phase += Time.deltaTime * speedMultiplier;
+
+        // Подпрыгивание (вверх-вниз)
+        float bob = Mathf.Abs(Mathf.Sin(phase * bobSpeed)) * bobHeight * intensity;
+
+        // Покачивание (Z-ось — наклон влево-вправо)
+        float sway = Mathf.Sin(phase * swaySpeed) * swayAngle * intensity;
+
+        // Кивок (X-ось — наклон вперёд-назад)
+        float nod = Mathf.Sin(phase * nodSpeed) * nodAngle * intensity;
+
+        modelTransform.localPosition = baseLocalPosition + Vector3.up * bob;
+        modelTransform.localRotation = baseLocalRotation * Quaternion.Euler(nod, 0f, sway);
+    }
+}

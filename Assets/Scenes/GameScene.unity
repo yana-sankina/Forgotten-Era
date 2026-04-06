@@ -5266,6 +5266,14 @@ PrefabInstance:
       propertyPath: ySpeed
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 3566818052580044604, guid: 5e78605060a17d94da152aec703123e0, type: 3}
+      propertyPath: returnSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566818052580044604, guid: 5e78605060a17d94da152aec703123e0, type: 3}
+      propertyPath: collisionRadius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3997431680369696253, guid: 5e78605060a17d94da152aec703123e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

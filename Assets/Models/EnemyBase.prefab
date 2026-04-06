@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 7817124083226076205}
   - component: {fileID: 2248159278625684188}
   - component: {fileID: 7821738066536596196}
-  - component: {fileID: 118129732829382959}
   - component: {fileID: 3863101016695758365}
   - component: {fileID: 3158237155486783441}
   - component: {fileID: 6120632516467703296}
   - component: {fileID: 6756767852930870939}
+  - component: {fileID: 489525215532465650}
   m_Layer: 0
   m_Name: EnemyBase
   m_TagString: Untagged
@@ -144,21 +144,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &118129732829382959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4411827147769527514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f99a6ce5c74694479d7bce9e4029b48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackHitboxObject: {fileID: 8043303742999616763}
-  attackDuration: 0.3
-  attackCooldown: 1
 --- !u!114 &3863101016695758365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,12 +216,18 @@ MonoBehaviour:
   stuckSpeedThreshold: 0.05
   stuckTimeSeconds: 1.5
   playerLookupInterval: 1
-  postAttackTurnDelay: 0.25
-  attackTurnAcceleration: 10
-  attackTurnSpeedMultiplier: 0.22
-  recoveryTurnSpeedMultiplier: 0.35
-  minAttackWindowDuration: 0.35
-  minFreeTurnTimeBeforeNextSwing: 0.35
+--- !u!114 &489525215532465650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4411827147769527514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00decf134497038478b4e00827726d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8043303742999616763
 GameObject:
   m_ObjectHideFlags: 0

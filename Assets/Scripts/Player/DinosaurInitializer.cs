@@ -31,7 +31,7 @@ public class DinosaurInitializer : MonoBehaviour
             Debug.LogWarning("GameSession пуст — используется фоллбэк: " + species.speciesName);
         }
 
-        Debug.Log("Инициализация вида: " + species.speciesName);
+
 
         // 1. Сначала добавляем способность (чтобы она подписалась на события)
         AttachAbility(species);
@@ -70,7 +70,7 @@ public class DinosaurInitializer : MonoBehaviour
             cc.height = species.controllerHeight;
             cc.radius = species.controllerRadius;
             cc.center = new Vector3(0, species.controllerCenterY, 0);
-            Debug.Log($"CharacterController: h={cc.height}, r={cc.radius}, center.y={cc.center.y}");
+
         }
 
         // Добавляем DinosaurAnimator и инициализируем его
@@ -117,7 +117,7 @@ public class DinosaurInitializer : MonoBehaviour
             return;
         }
 
-        Debug.Log("Способность назначена: " + ability.AbilityName);
+
     }
 
     private void RemoveExistingAbilities()
