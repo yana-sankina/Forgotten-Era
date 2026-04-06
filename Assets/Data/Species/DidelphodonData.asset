@@ -51,4 +51,4 @@ MonoBehaviour:
   reengageHpThreshold: 0.65
   fleeDistance: 12
   fleePickRadius: 6
-  enableDebugLogs: 0
+  enableDebugLogs: 1

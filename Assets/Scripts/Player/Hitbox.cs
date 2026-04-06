@@ -13,7 +13,7 @@ public class Hitbox : MonoBehaviour
     private bool applyStun = false;
     private float stunDuration;
 
-    private List<Collider> hitTargets; 
+    private HashSet<Damageable> hitTargets;
     
     /// <summary>
     /// Обычная атака — только урон.
@@ -25,7 +25,7 @@ public class Hitbox : MonoBehaviour
         applyStun = false;
         if (hitTargets == null)
         {
-            hitTargets = new List<Collider>();
+            hitTargets = new HashSet<Damageable>();
         }
         hitTargets.Clear();
     }
@@ -51,31 +51,51 @@ public class Hitbox : MonoBehaviour
         stunDuration = stunDur;
     }
     
+    private void OnEnable()
+    {
+        if (hitTargets == null)
+            hitTargets = new HashSet<Damageable>();
+        hitTargets.Clear();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (attackDamage > 0 && !hitTargets.Contains(other))
-        {
-            Damageable target = null;
+        TryApplyHit(other);
+    }
 
-            // Сначала пытаемся найти Damageable на самом collider-объекте.
-            if (!other.TryGetComponent<Damageable>(out target))
-            {
-                // Если collider дочерний — ищем на родителе (частый случай у моделей врагов).
-                target = other.GetComponentInParent<Damageable>();
-            }
+    private void OnTriggerStay(Collider other)
+    {
+        // Фоллбек: если хитбокс включился уже внутри цели, Enter может не сработать в этот кадр.
+        TryApplyHit(other);
+    }
 
-            if (target != null)
-            {
-                target.TakeDamage(attackDamage);
+    private void TryApplyHit(Collider other)
+    {
+        if (attackDamage <= 0 || other == null)
+            return;
 
-                if (applyBleed)
-                    target.ApplyBleed(bleedDamagePerTick, bleedDuration);
+        Damageable target = null;
+        if (!other.TryGetComponent<Damageable>(out target))
+            target = other.GetComponentInParent<Damageable>();
 
-                if (applyStun)
-                    target.ApplyStun(stunDuration);
-                
-                hitTargets.Add(other);
-            }
-        }
+        if (target == null)
+            return;
+
+        // Защита от авто-урона по себе, если на игроке когда-нибудь появится Damageable.
+        if (target.transform.root == transform.root)
+            return;
+
+        if (hitTargets.Contains(target))
+            return;
+
+        target.TakeDamage(attackDamage);
+
+        if (applyBleed)
+            target.ApplyBleed(bleedDamagePerTick, bleedDuration);
+
+        if (applyStun)
+            target.ApplyStun(stunDuration);
+
+        hitTargets.Add(target);
     }
 }

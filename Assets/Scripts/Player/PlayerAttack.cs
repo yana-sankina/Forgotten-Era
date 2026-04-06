@@ -15,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
 
     private bool isAttacking = false;
     private float cooldownTimer = 0f;
+    private bool isAbilityAttackLockActive = false;
 
     private void Awake()
     {
@@ -45,10 +46,18 @@ public class PlayerAttack : MonoBehaviour
     }
     private void OnAttack(PlayerAttackEvent e)
     {
+        if (isAbilityAttackLockActive)
+            return;
+
         if (!isAttacking && cooldownTimer <= 0f)
         {
             PerformAttack();
         }
+    }
+
+    public void SetAbilityAttackLock(bool isLocked)
+    {
+        isAbilityAttackLockActive = isLocked;
     }
     private void PerformAttack()
     {

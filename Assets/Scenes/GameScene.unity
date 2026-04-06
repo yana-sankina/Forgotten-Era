@@ -2088,6 +2088,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 669725893752257471, guid: be02bb3350c4ae44d84d8509b2b00c0b, type: 3}
+      propertyPath: turnSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 669725893752257471, guid: be02bb3350c4ae44d84d8509b2b00c0b, type: 3}
       propertyPath: playerCameraTransform
       value: 
       objectReference: {fileID: 1554119069}
@@ -5254,6 +5258,14 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 528207206}
+    - target: {fileID: 3566818052580044604, guid: 5e78605060a17d94da152aec703123e0, type: 3}
+      propertyPath: xSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566818052580044604, guid: 5e78605060a17d94da152aec703123e0, type: 3}
+      propertyPath: ySpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3997431680369696253, guid: 5e78605060a17d94da152aec703123e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Налаштування")]
     [SerializeField] private float sprintMultiplier = 2f;
     [SerializeField] private float turnSpeed = 7f;
+    [SerializeField] private float minTurnSpeedDegrees = 420f;
+    [SerializeField] private float maxTurnSpeedDegrees = 900f;
 
     [Header("Гравітація та стрибок")]
     [SerializeField] private float gravity = -20f;
@@ -108,8 +110,18 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+            float angle = Quaternion.Angle(transform.rotation, targetRotation);
+            float turnSpeedDegrees = CalculateTurnSpeedDegrees(angle);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeedDegrees * Time.deltaTime);
         }
+    }
+
+    private float CalculateTurnSpeedDegrees(float angle)
+    {
+        // Поддержка старых значений turnSpeed (раньше это был коэффициент Slerp).
+        float baseTurnSpeedDegrees = turnSpeed <= 30f ? turnSpeed * 90f : turnSpeed;
+        float boostedTurnSpeed = Mathf.Lerp(baseTurnSpeedDegrees, maxTurnSpeedDegrees, Mathf.InverseLerp(30f, 150f, angle));
+        return Mathf.Max(minTurnSpeedDegrees, boostedTurnSpeed);
     }
 
     /// <summary>

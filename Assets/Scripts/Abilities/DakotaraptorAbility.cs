@@ -48,6 +48,12 @@ public class DakotaraptorAbility : MonoBehaviour, IDinosaurAbility
     private void OnDisable()
     {
         EventBroker.Unsubscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+
+        if (playerAttack != null)
+            playerAttack.SetAbilityAttackLock(false);
+
+        if (attackHitbox != null)
+            attackHitbox.gameObject.SetActive(false);
     }
 
     private void OnStatsUpdated(PlayerStatsUpdatedEvent e)
@@ -84,6 +90,12 @@ public class DakotaraptorAbility : MonoBehaviour, IDinosaurAbility
 
     private IEnumerator AbilityCoroutine()
     {
+        if (attackHitbox == null)
+            yield break;
+
+        if (playerAttack != null)
+            playerAttack.SetAbilityAttackLock(true);
+
         // Используем тот же хитбокс что и для обычной атаки,
         // но с эффектом кровотечения
         attackHitbox.ActivateWithBleed(currentAttackDamage, bleedDamagePerTick, bleedDuration);
@@ -92,6 +104,9 @@ public class DakotaraptorAbility : MonoBehaviour, IDinosaurAbility
         yield return new WaitForSeconds(abilityDuration);
 
         attackHitbox.gameObject.SetActive(false);
+
+        if (playerAttack != null)
+            playerAttack.SetAbilityAttackLock(false);
     }
 
 

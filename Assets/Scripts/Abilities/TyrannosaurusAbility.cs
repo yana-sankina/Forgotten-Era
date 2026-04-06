@@ -19,6 +19,7 @@ public class TyrannosaurusAbility : MonoBehaviour, IDinosaurAbility
 
     private float cooldownTimer = 0f;
     private PlayerInput playerInput;
+    private PlayerAttack playerAttack;
     private int currentAttackDamage;
 
     public string AbilityName => "Сокрушительный удар";
@@ -28,6 +29,7 @@ public class TyrannosaurusAbility : MonoBehaviour, IDinosaurAbility
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+        playerAttack = GetComponent<PlayerAttack>();
 
         if (attackHitbox == null)
             attackHitbox = GetComponentInChildren<Hitbox>(true);
@@ -41,6 +43,12 @@ public class TyrannosaurusAbility : MonoBehaviour, IDinosaurAbility
     private void OnDisable()
     {
         EventBroker.Unsubscribe<PlayerStatsUpdatedEvent>(OnStatsUpdated);
+
+        if (playerAttack != null)
+            playerAttack.SetAbilityAttackLock(false);
+
+        if (attackHitbox != null)
+            attackHitbox.gameObject.SetActive(false);
     }
 
     private void OnStatsUpdated(PlayerStatsUpdatedEvent e)
@@ -70,6 +78,12 @@ public class TyrannosaurusAbility : MonoBehaviour, IDinosaurAbility
 
     private IEnumerator AbilityCoroutine()
     {
+        if (attackHitbox == null)
+            yield break;
+
+        if (playerAttack != null)
+            playerAttack.SetAbilityAttackLock(true);
+
         int abilityDamage = Mathf.Max(1, (int)(currentAttackDamage * damageMultiplier));
 
         attackHitbox.ActivateWithStun(abilityDamage, stunDuration);
@@ -78,5 +92,14 @@ public class TyrannosaurusAbility : MonoBehaviour, IDinosaurAbility
         yield return new WaitForSeconds(abilityDuration);
 
         attackHitbox.gameObject.SetActive(false);
+
+        if (playerAttack != null)
+            playerAttack.SetAbilityAttackLock(false);
+    }
+
+    private void OnDestroy()
+    {
+        if (playerAttack != null)
+            playerAttack.SetAbilityAttackLock(false);
     }
 }
