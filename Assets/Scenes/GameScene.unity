@@ -5274,6 +5274,18 @@ PrefabInstance:
       propertyPath: collisionRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3566818052580044604, guid: 5e78605060a17d94da152aec703123e0, type: 3}
+      propertyPath: groundClearance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566818052580044604, guid: 5e78605060a17d94da152aec703123e0, type: 3}
+      propertyPath: minCameraRelativeY
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566818052580044604, guid: 5e78605060a17d94da152aec703123e0, type: 3}
+      propertyPath: groundLayers.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3997431680369696253, guid: 5e78605060a17d94da152aec703123e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
