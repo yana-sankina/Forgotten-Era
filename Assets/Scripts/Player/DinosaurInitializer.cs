@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Висит на объекте игрока. При старте сцены читает выбранный вид
@@ -29,9 +30,8 @@ public class DinosaurInitializer : MonoBehaviour
                 return;
             }
             Debug.LogWarning("GameSession пуст — используется фоллбэк: " + species.speciesName);
+            GameSession.SelectedSpecies = species;
         }
-
-
 
         // 1. Сначала добавляем способность (чтобы она подписалась на события)
         AttachAbility(species);
@@ -46,6 +46,66 @@ public class DinosaurInitializer : MonoBehaviour
 
         // 3. Модель и анимации
         SetupModel(species);
+
+    }
+
+    private IEnumerator Start()
+    {
+        if (!GameSession.IsLoadingFromSave)
+            yield break;
+
+        // Ждём один кадр, чтобы PlayerHealth/PlayerNeeds/UI успели пройти Start/OnEnable.
+        yield return null;
+
+        ApplySaveData(GetComponent<PlayerGrowth>());
+        GameSession.IsLoadingFromSave = false;
+    }
+
+    /// <summary>
+    /// Восстановить все данные игрока из сохранения.
+    /// </summary>
+    private void ApplySaveData(PlayerGrowth growth)
+    {
+        SaveData data = SaveSystem.Load(GameSession.ActiveSaveSlot);
+        if (data == null)
+        {
+            Debug.LogWarning("Не удалось загрузить сейв из слота " + GameSession.ActiveSaveSlot);
+            return;
+        }
+
+        // Позиция (отключаем CC чтобы teleport сработал)
+        CharacterController cc = GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+        transform.position = new Vector3(data.posX, data.posY, data.posZ);
+        transform.rotation = Quaternion.Euler(0, data.rotationY, 0);
+        if (cc != null) cc.enabled = true;
+
+        // Рост
+        if (growth != null)
+            growth.LoadState(data.currentGrowth, data.growthStageIndex);
+
+        // Прокачка (ПЕРЕД здоровьем, чтобы maxHP был пересчитан)
+        StatUpgradeSystem stats = GetComponent<StatUpgradeSystem>();
+        if (stats != null)
+            stats.LoadState(data.availablePoints, data.bonusHP, data.bonusATK, data.bonusSPD);
+
+        if (growth != null)
+            growth.RefreshStats();
+
+        // Здоровье (ПОСЛЕ прокачки)
+        PlayerHealth health = GetComponent<PlayerHealth>();
+        if (health != null)
+            health.LoadHP(data.currentHP);
+
+        // Опыт
+        ExperienceSystem xp = GetComponent<ExperienceSystem>();
+        if (xp != null)
+            xp.LoadState(data.currentXP, data.currentLevel);
+
+        // Потребности
+        PlayerNeeds needs = GetComponent<PlayerNeeds>();
+        if (needs != null)
+            needs.LoadNeeds(data.currentHunger, data.currentThirst);
     }
 
     private void SetupModel(DinosaurSpeciesData species)
@@ -70,7 +130,6 @@ public class DinosaurInitializer : MonoBehaviour
             cc.height = species.controllerHeight;
             cc.radius = species.controllerRadius;
             cc.center = new Vector3(0, species.controllerCenterY, 0);
-
         }
 
         // Добавляем DinosaurAnimator и инициализируем его
@@ -82,7 +141,6 @@ public class DinosaurInitializer : MonoBehaviour
                 dAnimator = gameObject.AddComponent<DinosaurAnimator>();
 
             dAnimator.Init(modelAnimator);
-            Debug.Log("Animator подключён к модели.");
         }
     }
 
@@ -91,7 +149,7 @@ public class DinosaurInitializer : MonoBehaviour
         // Убираем все старые способности (на случай если были)
         RemoveExistingAbilities();
 
-        // Определяем тип по имени SO. Можно заменить на enum если имена будут меняться.
+        // Определяем тип по имени SO
         string speciesName = species.speciesName.ToLower().Trim();
 
         IDinosaurAbility ability = null;
@@ -116,13 +174,10 @@ public class DinosaurInitializer : MonoBehaviour
             Debug.LogWarning("Неизвестный вид: " + species.speciesName + ". Способность не назначена.");
             return;
         }
-
-
     }
 
     private void RemoveExistingAbilities()
     {
-        // Удаляем все существующие способности перед добавлением новой
         var existing = GetComponents<MonoBehaviour>();
         foreach (var comp in existing)
         {

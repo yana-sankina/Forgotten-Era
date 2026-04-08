@@ -14,6 +14,7 @@ public class PlayerNeeds : MonoBehaviour
     
     public float CurrentHunger { get; private set; }
 
+    private bool hasLoadedNeeds = false;
 
     private void OnEnable()
     {
@@ -48,15 +49,30 @@ public class PlayerNeeds : MonoBehaviour
     
     void Start()
     {
-        // Начальные значения будут выставлены через OnCapacityUpdated от PlayerGrowth
-        // но на случай если событие придёт позже — ставим дефолт
-        CurrentHunger = maxHunger;
-        CurrentThirst = maxThirst;
+        if (!hasLoadedNeeds)
+        {
+            // Начальные значения будут выставлены через OnCapacityUpdated от PlayerGrowth
+            // но на случай если событие придёт позже — ставим дефолт
+            CurrentHunger = maxHunger;
+            CurrentThirst = maxThirst;
         
-        PublishHungerEvent();
-        PublishThirstEvent();
+            PublishHungerEvent();
+            PublishThirstEvent();
+        }
         
         StartCoroutine(NeedsDecayLoop());
+    }
+
+    /// <summary>
+    /// Восстановить потребности из сохранения.
+    /// </summary>
+    public void LoadNeeds(float hunger, float thirst)
+    {
+        hasLoadedNeeds = true;
+        CurrentHunger = Mathf.Clamp(hunger, 0f, maxHunger);
+        CurrentThirst = Mathf.Clamp(thirst, 0f, maxThirst);
+        PublishHungerEvent();
+        PublishThirstEvent();
     }
 
     private IEnumerator NeedsDecayLoop()
@@ -66,7 +82,7 @@ public class PlayerNeeds : MonoBehaviour
             yield return new WaitForSeconds(decayInterval);
 
             CurrentHunger = Mathf.Clamp(CurrentHunger - hungerDecayRate, 0, maxHunger);
-            CurrentThirst = Mathf.Clamp(CurrentThirst - thirstDecayRate, 0, maxHunger);
+            CurrentThirst = Mathf.Clamp(CurrentThirst - thirstDecayRate, 0, maxThirst);
             
             bool isStarving = CurrentHunger <= 0;
             bool isDehydrated = CurrentThirst <= 0;

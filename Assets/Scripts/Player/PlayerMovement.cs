@@ -35,10 +35,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 verticalVelocity;
 
     /// <summary>Текущая скорость (для аниматора)</summary>
-    public Vector3 Velocity => controller.velocity;
+    public Vector3 Velocity => CanUseController() ? controller.velocity : Vector3.zero;
 
     /// <summary>На земле? (для аниматора и способностей)</summary>
-    public bool IsGrounded => controller.isGrounded;
+    public bool IsGrounded => CanUseController() && controller.isGrounded;
 
 
 
@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (input == null || playerStamina == null) return;
+        if (input == null || playerStamina == null || !CanUseController()) return;
 
         // --- Земля ---
         if (controller.isGrounded && verticalVelocity.y < 0)
@@ -102,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity.y += gravity * Time.deltaTime;
 
         // --- Финальное движение ---
+        if (!CanUseController()) return;
         controller.Move(horizontalMove + verticalVelocity * Time.deltaTime);
 
         // --- Поворот ---
@@ -127,9 +128,16 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void Jump(float jumpSpeed)
     {
-        if (controller.isGrounded)
+        if (CanUseController() && controller.isGrounded)
         {
             verticalVelocity.y = jumpSpeed;
         }
+    }
+
+    private bool CanUseController()
+    {
+        return controller != null
+            && controller.enabled
+            && controller.gameObject.activeInHierarchy;
     }
 }

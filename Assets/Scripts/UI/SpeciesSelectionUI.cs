@@ -6,7 +6,7 @@ using TMPro;
 
 /// <summary>
 /// Панель выбора вида динозавра.
-/// Показывает 3 карточки, при клике — записывает выбор в GameSession и загружает игровую сцену.
+/// Показывает 3 карточки, при клике - записывает выбор в GameSession и загружает игровую сцену.
 /// </summary>
 public class SpeciesSelectionUI : MonoBehaviour
 {
@@ -38,6 +38,16 @@ public class SpeciesSelectionUI : MonoBehaviour
 
     [Header("Настройки")]
     [SerializeField] private string gameSceneName = "GameScene";
+
+    private void Awake()
+    {
+        GameSession.AllSpecies = new[]
+        {
+            tRexData,
+            dakotaraptorData,
+            pectinodonData
+        };
+    }
 
     private void Start()
     {
@@ -71,6 +81,8 @@ public class SpeciesSelectionUI : MonoBehaviour
         }
 
         GameSession.SelectedSpecies = species;
+        GameSession.IsLoadingFromSave = false;
+        GameSession.ActiveSaveSlot = 0;
         Debug.Log("Выбран вид: " + species.speciesName + ". Загрузка игры...");
         SceneManager.LoadScene(gameSceneName);
     }

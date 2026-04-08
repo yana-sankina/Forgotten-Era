@@ -61,6 +61,16 @@ public class PlayerHealth : MonoBehaviour
         EventBroker.Publish(new PlayerHealthChangedEvent { CurrentHP = currentHP, MaxHP = maxHP });
     }
 
+    /// <summary>
+    /// Восстановить HP из сохранения (без триггера смерти).
+    /// </summary>
+    public void LoadHP(int hp)
+    {
+        currentHP = Mathf.Clamp(hp, 1, maxHP);
+        isDead = false;
+        EventBroker.Publish(new PlayerHealthChangedEvent { CurrentHP = currentHP, MaxHP = maxHP });
+    }
+
     private void Die()
     {
         if (isDead) return;

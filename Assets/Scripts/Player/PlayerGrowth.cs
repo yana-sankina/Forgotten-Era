@@ -11,6 +11,9 @@ public class PlayerGrowth : MonoBehaviour
     private bool isInitialized = false;
     private int currentStageIndex = -1;
 
+    public float CurrentGrowth => currentGrowth;
+    public int CurrentStageIndex => currentStageIndex;
+
     // Бонусы от очков прокачки (поверх роста)
     private int bonusHP = 0;
     private int bonusATK = 0;
@@ -30,6 +33,32 @@ public class PlayerGrowth : MonoBehaviour
         PublishGrowthEvent();
 
         StartCoroutine(GrowthLoop());
+    }
+
+    /// <summary>
+    /// Восстановить рост из сохранения.
+    /// Вызывается ПОСЛЕ Initialize().
+    /// </summary>
+    public void LoadState(float growth, int stageIndex)
+    {
+        StopAllCoroutines();
+        currentGrowth = Mathf.Clamp(growth, 0f, speciesData.maxGrowth);
+        currentStageIndex = stageIndex;
+
+        UpdateScaleAndStats();
+        PublishGrowthEvent();
+
+        if (currentGrowth < speciesData.maxGrowth)
+            StartCoroutine(GrowthLoop());
+    }
+
+    public void RefreshStats()
+    {
+        if (speciesData == null)
+            return;
+
+        UpdateScaleAndStats();
+        PublishGrowthEvent();
     }
 
     void Start()

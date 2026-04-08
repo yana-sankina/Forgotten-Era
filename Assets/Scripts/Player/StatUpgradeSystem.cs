@@ -22,6 +22,18 @@ public class StatUpgradeSystem : MonoBehaviour
     public int BonusATK => bonusATK;
     public float BonusSPD => bonusSPD;
 
+    /// <summary>
+    /// Восстановить очки и бонусы из сохранения.
+    /// </summary>
+    public void LoadState(int points, int hp, int atk, float spd)
+    {
+        availablePoints = Mathf.Max(0, points);
+        bonusHP = hp;
+        bonusATK = atk;
+        bonusSPD = spd;
+        PublishAll();
+    }
+
     private void OnEnable()
     {
         EventBroker.Subscribe<GrowthStageReachedEvent>(OnStageReached);

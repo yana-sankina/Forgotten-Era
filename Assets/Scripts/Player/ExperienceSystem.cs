@@ -37,6 +37,16 @@ public class ExperienceSystem : MonoBehaviour
         PublishXPEvent();
     }
 
+    /// <summary>
+    /// Восстановить XP и уровень из сохранения.
+    /// </summary>
+    public void LoadState(int xp, int level)
+    {
+        currentXP = Mathf.Max(0, xp);
+        currentLevel = Mathf.Max(1, level);
+        PublishXPEvent();
+    }
+
     private void OnEnemyKilled(EnemyKilledEvent e)
     {
         AddXP(e.XPReward);
