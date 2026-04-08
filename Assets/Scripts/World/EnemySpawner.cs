@@ -561,7 +561,7 @@ public class EnemySpawner : MonoBehaviour
     {
         liveEnemyIds.Clear();
 
-        Damageable[] allDamageables = FindObjectsOfType<Damageable>(true);
+        Damageable[] allDamageables = FindObjectsByType<Damageable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         for (int i = 0; i < allDamageables.Length; i++)
         {
             Damageable d = allDamageables[i];
@@ -586,7 +586,7 @@ public class EnemySpawner : MonoBehaviour
 #if UNITY_2023_1_OR_NEWER
         PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>(FindObjectsInactive.Exclude);
 #else
-        PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+        PlayerHealth playerHealth = FindAnyObjectByType<PlayerHealth>();
 #endif
         if (playerHealth != null)
         {

@@ -1,11 +1,12 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Пектинодон:
 /// - Пассивка 1: Прыжок (Space)
-/// - Пассивка 2: Ночное зрение (визуал — настраивается пользователем через постпроцессинг)
-/// - Активная: Обострённый слух (Q) — подсвечивает всех существ в большом радиусе
+/// - Пассивка 2: Ночное зрение (визуал - настраивается пользователем через постпроцессинг)
+/// - Активная: Обострённый слух (Q) - подсвечивает всех существ в большом радиусе
 /// </summary>
 public class PectinodonAbility : MonoBehaviour, IDinosaurAbility
 {
@@ -14,7 +15,7 @@ public class PectinodonAbility : MonoBehaviour, IDinosaurAbility
 
     [Header("Обострённый слух")]
     [SerializeField] private float abilityCooldown = 15f;
-    [SerializeField] private float scanRadius = 30f;
+    [SerializeField] private float scanRadius = 500f;
     [SerializeField] private float highlightDuration = 5f;
 
     private float cooldownTimer = 0f;
@@ -38,13 +39,13 @@ public class PectinodonAbility : MonoBehaviour, IDinosaurAbility
 
         if (playerInput == null) return;
 
-        // Прыжок — пассивная механика
+        // Прыжок - пассивная механика
         if (playerInput.JumpInput && playerMovement != null)
         {
             playerMovement.Jump(jumpSpeed);
         }
 
-        // Обострённый слух — активная способность
+        // Обострённый слух - активная способность
         if (playerInput.AbilityInput && IsReady)
         {
             Activate();
@@ -61,24 +62,33 @@ public class PectinodonAbility : MonoBehaviour, IDinosaurAbility
 
     private IEnumerator ScanCoroutine()
     {
-        // Найти все объекты с Damageable в радиусе
+        // Найти все объекты с Damageable в радиусе.
         Collider[] hits = Physics.OverlapSphere(transform.position, scanRadius);
+        HashSet<Damageable> detectedTargets = new HashSet<Damageable>();
+
         foreach (Collider hit in hits)
         {
-            if (hit.gameObject == gameObject) continue;
+            if (hit.gameObject == gameObject)
+                continue;
 
-            if (hit.TryGetComponent<Damageable>(out Damageable target) && !target.IsDead)
+            Damageable target = null;
+            if (!hit.TryGetComponent<Damageable>(out target))
+                target = hit.GetComponentInParent<Damageable>();
+
+            if (target == null || target.IsDead || detectedTargets.Contains(target))
+                continue;
+
+            detectedTargets.Add(target);
+
+            EventBroker.Publish(new EntityDetectedEvent
             {
-                // Публикуем событие для каждой обнаруженной цели
-                // UI может отрисовать маркер над ними
-                EventBroker.Publish(new EntityDetectedEvent
-                {
-                    EntityTransform = hit.transform,
-                    Duration = highlightDuration
-                });
-                Debug.Log("Слышу: " + hit.name + " на расстоянии " +
-                    Vector3.Distance(transform.position, hit.transform.position).ToString("F1") + "м");
-            }
+                EntityTransform = target.transform,
+                Duration = highlightDuration
+            });
+
+            Debug.Log(
+                "Слышу: " + target.name + " на расстоянии " +
+                Vector3.Distance(transform.position, target.transform.position).ToString("F1") + "м");
         }
 
         yield return null;

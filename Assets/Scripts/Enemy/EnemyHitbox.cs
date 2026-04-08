@@ -5,9 +5,9 @@ public class EnemyHitbox : MonoBehaviour
 {
     [Header("Налаштування")]
     public int attackDamage = 5;
-    
-    private List<Collider> hitTargets; 
-    
+
+    private List<Collider> hitTargets;
+
     void OnEnable()
     {
         if (hitTargets == null)
@@ -16,7 +16,7 @@ public class EnemyHitbox : MonoBehaviour
         }
         hitTargets.Clear();
     }
-    
+
     void OnTriggerEnter(Collider other)
     {
         TryDealDamage(other);
@@ -45,9 +45,17 @@ public class EnemyHitbox : MonoBehaviour
 
         if (player != null)
         {
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
             Debug.LogWarning("Игрок получил " + attackDamage + " урона!");
             player.TakeDamage(attackDamage);
-            
+
+            EventBroker.Publish(new PlayerDamagedEvent
+            {
+                Player = player,
+                DamageAmount = attackDamage,
+                HitPoint = hitPoint
+            });
+
             hitTargets.Add(other);
         }
     }

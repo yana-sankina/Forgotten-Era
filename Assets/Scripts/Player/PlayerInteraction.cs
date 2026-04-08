@@ -85,6 +85,12 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         playerNeeds.Eat(closestItem.restoreAmountPerBite);
+        EventBroker.Publish(new PlayerAteEvent
+        {
+            Food = closestItem,
+            RestoreAmount = closestItem.restoreAmountPerBite,
+            Position = closestItem.transform.position
+        });
         closestItem.usesLeft--;
 
         if (closestItem.usesLeft <= 0)
@@ -128,6 +134,12 @@ public class PlayerInteraction : MonoBehaviour
         while (true)
         {
             playerNeeds.Drink(source.restoreAmountPerTick);
+            EventBroker.Publish(new PlayerDrankEvent
+            {
+                WaterSource = source,
+                RestoreAmount = source.restoreAmountPerTick,
+                Position = transform.position
+            });
 
             if (playerNeeds.CurrentThirst >= playerNeeds.maxThirst)
             {

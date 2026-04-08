@@ -10,7 +10,9 @@ public struct PlayerRespawnedEvent
 {
     public UnityEngine.Vector3 Position;
 }
+
 public struct PlayerAttackEvent { }
+
 public struct PlayerGrowthChangedEvent
 {
     public float CurrentGrowth;
@@ -64,6 +66,55 @@ public struct AbilityUsedEvent
 {
     public string AbilityName;
     public float Cooldown;
+}
+
+public struct EnemyDamagedEvent
+{
+    public Damageable Target;
+    public int DamageAmount;
+    public UnityEngine.Vector3 HitPoint;
+    public bool IsBleed;
+    public bool IsStun;
+}
+
+public struct PlayerDamagedEvent
+{
+    public PlayerHealth Player;
+    public int DamageAmount;
+    public UnityEngine.Vector3 HitPoint;
+}
+
+public struct PlayerAteEvent
+{
+    public Consumable Food;
+    public float RestoreAmount;
+    public UnityEngine.Vector3 Position;
+}
+
+public struct PlayerDrankEvent
+{
+    public Consumable WaterSource;
+    public float RestoreAmount;
+    public UnityEngine.Vector3 Position;
+}
+
+public struct DayNightPhaseChangedEvent
+{
+    public bool IsNight;
+    public float NormalizedTime;
+    public string PhaseName;
+}
+
+public struct EnemyStunnedEvent
+{
+    public Damageable Target;
+    public float Duration;
+}
+
+public struct EnemyBleedingEvent
+{
+    public Damageable Target;
+    public float Duration;
 }
 
 public struct EntityDetectedEvent

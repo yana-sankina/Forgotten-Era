@@ -196,7 +196,7 @@ public class ResourceSpawner : MonoBehaviour
 
     private int CountInitialCorpses()
     {
-        Damageable[] allDamageables = FindObjectsOfType<Damageable>(true);
+        Damageable[] allDamageables = FindObjectsByType<Damageable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         int corpseCount = 0;
         for (int i = 0; i < allDamageables.Length; i++)
         {

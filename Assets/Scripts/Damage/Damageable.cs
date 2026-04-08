@@ -50,6 +50,11 @@ public class Damageable : MonoBehaviour
     {
         if (IsDead || IsCorpse) return;
         if (bleedCoroutine != null) StopCoroutine(bleedCoroutine);
+        EventBroker.Publish(new EnemyBleedingEvent
+        {
+            Target = this,
+            Duration = duration
+        });
         bleedCoroutine = StartCoroutine(BleedCoroutine(damagePerTick, duration));
     }
 
@@ -60,6 +65,11 @@ public class Damageable : MonoBehaviour
     {
         if (IsDead || IsCorpse) return;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
+        EventBroker.Publish(new EnemyStunnedEvent
+        {
+            Target = this,
+            Duration = duration
+        });
         stunCoroutine = StartCoroutine(StunCoroutine(duration));
     }
 

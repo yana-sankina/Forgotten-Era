@@ -10,7 +10,7 @@ public class TyrannosaurusAbility : MonoBehaviour, IDinosaurAbility
     [Header("Сокрушительный удар")]
     [SerializeField] private float abilityCooldown = 10f;
     [SerializeField] private float abilityDuration = 0.4f;
-    [SerializeField] private float stunDuration = 1.5f;
+    [SerializeField] private float stunDuration = 4f;
     [Tooltip("Множитель от базового урона (⅓ = 0.33)")]
     [SerializeField] private float damageMultiplier = 0.33f;
 

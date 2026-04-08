@@ -84,7 +84,7 @@ public class PauseMenuUI : MonoBehaviour
             playerInput = player.GetComponent<PlayerInput>();
 
         if (playerInput == null)
-            playerInput = UnityEngine.Object.FindObjectOfType<PlayerInput>();
+            playerInput = UnityEngine.Object.FindAnyObjectByType<PlayerInput>();
     }
 
     private void Pause()

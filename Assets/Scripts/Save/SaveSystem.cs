@@ -144,19 +144,19 @@ public static class SaveSystem
             // Проект может тестироваться без настроенного Player tag.
         }
 
-        PlayerHealth health = UnityEngine.Object.FindObjectOfType<PlayerHealth>();
+        PlayerHealth health = UnityEngine.Object.FindAnyObjectByType<PlayerHealth>();
         if (health != null)
             return health.gameObject;
 
-        DinosaurInitializer initializer = UnityEngine.Object.FindObjectOfType<DinosaurInitializer>();
+        DinosaurInitializer initializer = UnityEngine.Object.FindAnyObjectByType<DinosaurInitializer>();
         if (initializer != null)
             return initializer.gameObject;
 
-        PlayerInput input = UnityEngine.Object.FindObjectOfType<PlayerInput>();
+        PlayerInput input = UnityEngine.Object.FindAnyObjectByType<PlayerInput>();
         if (input != null)
             return input.gameObject;
 
-        PlayerNeeds needs = UnityEngine.Object.FindObjectOfType<PlayerNeeds>();
+        PlayerNeeds needs = UnityEngine.Object.FindAnyObjectByType<PlayerNeeds>();
         if (needs != null)
             return needs.gameObject;
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public class Hitbox : MonoBehaviour
 {
-    private int attackDamage = 0; 
-    
-    // Эффекты способностей — если заданы, применяются при ударе
+    private int attackDamage = 0;
+
+    // Эффекты способностей - если заданы, применяются при ударе
     private bool applyBleed = false;
     private int bleedDamagePerTick;
     private float bleedDuration;
@@ -14,9 +14,9 @@ public class Hitbox : MonoBehaviour
     private float stunDuration;
 
     private HashSet<Damageable> hitTargets;
-    
+
     /// <summary>
-    /// Обычная атака — только урон.
+    /// Обычная атака - только урон.
     /// </summary>
     public void Activate(int damage)
     {
@@ -31,7 +31,7 @@ public class Hitbox : MonoBehaviour
     }
 
     /// <summary>
-    /// Атака с кровотечением (Дакотараптор — серповидный удар).
+    /// Атака с кровотечением (Дакотараптор - серповидный удар).
     /// </summary>
     public void ActivateWithBleed(int damage, int bleedDmgPerTick, float bleedDur)
     {
@@ -42,7 +42,7 @@ public class Hitbox : MonoBehaviour
     }
 
     /// <summary>
-    /// Атака со станом (Тирекс — сокрушительный удар).
+    /// Атака со станом (Тирекс - сокрушительный удар).
     /// </summary>
     public void ActivateWithStun(int damage, float stunDur)
     {
@@ -50,7 +50,7 @@ public class Hitbox : MonoBehaviour
         applyStun = true;
         stunDuration = stunDur;
     }
-    
+
     private void OnEnable()
     {
         if (hitTargets == null)
@@ -88,7 +88,17 @@ public class Hitbox : MonoBehaviour
         if (hitTargets.Contains(target))
             return;
 
+        Vector3 hitPoint = other.ClosestPoint(transform.position);
         target.TakeDamage(attackDamage);
+
+        EventBroker.Publish(new EnemyDamagedEvent
+        {
+            Target = target,
+            DamageAmount = attackDamage,
+            HitPoint = hitPoint,
+            IsBleed = applyBleed,
+            IsStun = applyStun
+        });
 
         if (applyBleed)
             target.ApplyBleed(bleedDamagePerTick, bleedDuration);

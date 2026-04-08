@@ -539,7 +539,7 @@ public class EnemyAI : MonoBehaviour
 #if UNITY_2023_1_OR_NEWER
         PlayerHealth foundHealth = FindFirstObjectByType<PlayerHealth>(FindObjectsInactive.Exclude);
 #else
-        PlayerHealth foundHealth = FindObjectOfType<PlayerHealth>();
+        PlayerHealth foundHealth = FindAnyObjectByType<PlayerHealth>();
 #endif
         if (foundHealth != null)
         {
