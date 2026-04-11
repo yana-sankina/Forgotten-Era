@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Показывает временные маркеры над обнаруженными сущностями.
 /// Используется для подсветки врагов способностью Пектинодона.
 /// </summary>
 public class EntityHighlightManager : MonoBehaviour
