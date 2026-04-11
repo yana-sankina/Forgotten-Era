@@ -89,12 +89,10 @@ public class PlayerNeeds : MonoBehaviour
             
             if (isStarving)
             {
-                Debug.LogWarning("Игрок умирает от голода!");
                 EventBroker.Publish(new EnvironmentDamageEvent { DamageAmount = starvationDamage });
             }
             if (isDehydrated)
             {
-                Debug.LogWarning("Игрок умирает от жажды!");
                 EventBroker.Publish(new EnvironmentDamageEvent { DamageAmount = starvationDamage });
             }
 
@@ -108,7 +106,6 @@ public class PlayerNeeds : MonoBehaviour
         CurrentHunger += amount;
         CurrentHunger = Mathf.Clamp(CurrentHunger, 0, maxHunger);
         PublishHungerEvent();
-        Debug.Log("Поел. Голод теперь: " + CurrentHunger);
     }
 
     public void Drink(float amount)
@@ -116,7 +113,6 @@ public class PlayerNeeds : MonoBehaviour
         CurrentThirst += amount;
         CurrentThirst = Mathf.Clamp(CurrentThirst, 0, maxThirst);
         PublishThirstEvent();
-        Debug.Log("Попил. Жажда теперь: " + CurrentThirst);
     }
     
     private void PublishHungerEvent()

@@ -34,7 +34,6 @@ public class Damageable : MonoBehaviour
     {
         if (IsDead || IsCorpse) return;
         currentHP -= amount;
-        Debug.Log(gameObject.name + " получил " + amount + " урона. Осталось ХП: " + currentHP);
 
         if (currentHP <= 0)
         {
@@ -117,7 +116,6 @@ public class Damageable : MonoBehaviour
             yield return new WaitForSeconds(1f);
             elapsed += 1f;
             TakeDamage(damagePerTick);
-            Debug.Log(gameObject.name + " истекает кровью: " + damagePerTick + " урона");
         }
         bleedCoroutine = null;
     }
@@ -125,7 +123,6 @@ public class Damageable : MonoBehaviour
     private IEnumerator StunCoroutine(float duration)
     {
         IsStunned = true;
-        Debug.Log(gameObject.name + " оглушён на " + duration + " сек!");
         yield return new WaitForSeconds(duration);
         IsStunned = false;
         stunCoroutine = null;
@@ -138,7 +135,6 @@ public class Damageable : MonoBehaviour
 
         Died?.Invoke(this);
         EventBroker.Publish(new EnemyKilledEvent { XPReward = xpReward });
-        Debug.Log(gameObject.name + " убит! XP: " + xpReward);
 
         if (autoRespawn)
         {
@@ -156,7 +152,5 @@ public class Damageable : MonoBehaviour
         IsStunned = false;
         bleedCoroutine = null;
         stunCoroutine = null;
-
-        Debug.Log(gameObject.name + " воскрес!");
     }
 }

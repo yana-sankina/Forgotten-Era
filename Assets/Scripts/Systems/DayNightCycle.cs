@@ -70,6 +70,13 @@ public class DayNightCycle : MonoBehaviour
 
     private void Start()
     {
+        if (sun == null)
+        {
+            Debug.LogError("DayNightCycle: не назначен Sun (Directional Light).", this);
+            enabled = false;
+            return;
+        }
+
         if (sun != null)
         {
             originalShadowMode = sun.shadows;
@@ -276,5 +283,17 @@ public class DayNightCycle : MonoBehaviour
             return Color.white;
 
         return sunColorOverDay.Evaluate(time01);
+    }
+
+    private void OnDestroy()
+    {
+        if (runtimeSkyboxMaterial != null)
+        {
+            if (RenderSettings.skybox == runtimeSkyboxMaterial)
+                RenderSettings.skybox = null;
+
+            Destroy(runtimeSkyboxMaterial);
+            runtimeSkyboxMaterial = null;
+        }
     }
 }

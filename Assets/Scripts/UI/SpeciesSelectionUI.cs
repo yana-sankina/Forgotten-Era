@@ -83,7 +83,6 @@ public class SpeciesSelectionUI : MonoBehaviour
         GameSession.SelectedSpecies = species;
         GameSession.IsLoadingFromSave = false;
         GameSession.ActiveSaveSlot = 0;
-        Debug.Log("Выбран вид: " + species.speciesName + ". Загрузка игры...");
         SceneManager.LoadScene(gameSceneName);
     }
 }

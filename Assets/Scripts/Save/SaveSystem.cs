@@ -41,7 +41,6 @@ public static class SaveSystem
                 Directory.CreateDirectory(dir);
 
             File.WriteAllText(path, json);
-            Debug.Log("Сохранено в слот " + (slotIndex + 1) + ": " + path);
             return true;
         }
         catch (Exception e)
@@ -111,7 +110,6 @@ public static class SaveSystem
         if (File.Exists(path))
         {
             File.Delete(path);
-            Debug.Log("Сохранение удалено из слота " + (slotIndex + 1) + ": " + path);
         }
     }
 

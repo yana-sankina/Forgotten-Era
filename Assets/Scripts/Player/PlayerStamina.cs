@@ -29,8 +29,9 @@ public class PlayerStamina : MonoBehaviour
     private void Update()
     {
         bool isSprinting = playerInput.IsSprinting && CanSprint;
+        bool isMoving = playerInput.MovementInput.sqrMagnitude > 0.01f;
 
-        if (isSprinting && playerInput.MovementInput.y > 0)
+        if (isSprinting && isMoving)
         {
             HandleConsumption();
         }
@@ -60,6 +61,9 @@ public class PlayerStamina : MonoBehaviour
 
     private void HandleRegeneration()
     {
+        if (playerInput.IsSprinting)
+            return;
+
         if (currentStamina < maxStamina && regenCoroutine == null)
         {
             regenCoroutine = StartCoroutine(RegenDelayCoroutine());

@@ -33,9 +33,7 @@ public class AutoSaveManager : MonoBehaviour
             if (Time.timeScale > 0f) // Не сохраняем на паузе
             {
                 int slot = GetCurrentAutoSaveSlot();
-                bool success = SaveSystem.Save(slot);
-                if (logAutoSaves && success)
-                    Debug.Log("Автосохранение выполнено (слот " + (slot + 1) + ")");
+                SaveSystem.Save(slot);
             }
         }
     }

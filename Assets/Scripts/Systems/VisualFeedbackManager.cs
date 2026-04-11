@@ -20,7 +20,6 @@ public class VisualFeedbackManager : MonoBehaviour
     [SerializeField] private GameObject enemyHitEffectPrefab;
     [SerializeField] private float enemyHitEffectOffset = 0.2f;
     [SerializeField] private float enemyHitEffectLiftY = 0.2f;
-    [SerializeField] private bool logEnemyHitEffectSpawn = false;
     [SerializeField] private GameObject stunEffectPrefab;
     [SerializeField] private float stunEffectHeightOffset = 1.5f;
     [SerializeField] private GameObject bleedEffectPrefab;
@@ -30,9 +29,6 @@ public class VisualFeedbackManager : MonoBehaviour
     [SerializeField] private GameObject eatEffectPrefab;
     [SerializeField] private GameObject drinkEffectPrefab;
     [SerializeField] private float needsEffectOffsetY = 0.1f;
-
-    [Header("Fallback")]
-    [SerializeField] private bool fallbackMode = true;
 
     private Coroutine playerDamageFlashCoroutine;
     private Color playerDamageOverlayBaseColor = Color.clear;
@@ -75,11 +71,7 @@ public class VisualFeedbackManager : MonoBehaviour
     private void OnPlayerDamaged(PlayerDamagedEvent e)
     {
         if (playerDamageOverlay == null)
-        {
-            if (fallbackMode)
-                Debug.Log("VisualFeedbackManager: playerDamageOverlay не назначен, экранная вспышка пропущена.");
             return;
-        }
 
         if (playerDamageFlashCoroutine != null)
             StopCoroutine(playerDamageFlashCoroutine);
@@ -109,11 +101,6 @@ public class VisualFeedbackManager : MonoBehaviour
         for (int i = 0; i < particleSystems.Length; i++)
         {
             particleSystems[i].Play(true);
-        }
-
-        if (logEnemyHitEffectSpawn)
-        {
-            Debug.Log("VisualFeedbackManager: enemy hit effect spawned at " + spawnPosition);
         }
     }
 

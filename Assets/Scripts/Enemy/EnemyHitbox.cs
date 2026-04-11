@@ -46,7 +46,6 @@ public class EnemyHitbox : MonoBehaviour
         if (player != null)
         {
             Vector3 hitPoint = other.ClosestPoint(transform.position);
-            Debug.LogWarning("Игрок получил " + attackDamage + " урона!");
             player.TakeDamage(attackDamage);
 
             EventBroker.Publish(new PlayerDamagedEvent

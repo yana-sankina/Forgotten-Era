@@ -25,7 +25,7 @@ public class PlayerGrowth : MonoBehaviour
     public void Initialize(DinosaurSpeciesData data)
     {
         speciesData = data;
-        currentGrowth = 0f;
+        currentGrowth = GetInitialGrowth();
         currentStageIndex = -1;
         isInitialized = true;
 
@@ -33,6 +33,16 @@ public class PlayerGrowth : MonoBehaviour
         PublishGrowthEvent();
 
         StartCoroutine(GrowthLoop());
+    }
+
+    private float GetInitialGrowth()
+    {
+        if (speciesData == null)
+            return 0f;
+
+        float onePercentGrowth = speciesData.maxGrowth * 0.01f;
+        float initialGrowth = Mathf.Max(onePercentGrowth, speciesData.growthPerTick);
+        return Mathf.Clamp(initialGrowth, 0f, speciesData.maxGrowth);
     }
 
     /// <summary>
@@ -109,7 +119,6 @@ public class PlayerGrowth : MonoBehaviour
 
             if (currentGrowth >= maxGrowth)
             {
-                Debug.LogWarning("Игрок ДОСТИГ МАКСИМАЛЬНОГО РОСТА!");
                 break;
             }
         }

@@ -51,13 +51,20 @@ public class DinosaurInitializer : MonoBehaviour
 
     private IEnumerator Start()
     {
+        PlayerGrowth growth = GetComponent<PlayerGrowth>();
+
+        // Повторно публикуем уже рассчитанные стартовые статы после того,
+        // как все подписчики успели пройти OnEnable/Start.
+        if (growth != null)
+            growth.RefreshStats();
+
         if (!GameSession.IsLoadingFromSave)
             yield break;
 
         // Ждём один кадр, чтобы PlayerHealth/PlayerNeeds/UI успели пройти Start/OnEnable.
         yield return null;
 
-        ApplySaveData(GetComponent<PlayerGrowth>());
+        ApplySaveData(growth);
         GameSession.IsLoadingFromSave = false;
     }
 
