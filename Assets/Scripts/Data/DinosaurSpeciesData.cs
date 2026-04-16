@@ -8,18 +8,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewDinosaurSpecies", menuName = "Dinosaur/Species Data")]
 public class DinosaurSpeciesData : ScriptableObject
 {
-    [Header("Общая информация")]
+    [Header("General Info")]
     public string speciesName;
     [TextArea(2, 4)]
     public string description;
     public Sprite icon;
 
-    [Header("Базовые характеристики (при 0% роста)")]
+    [Header("Basic Stats at Birth (0% Growth)")]
     public int baseMaxHP = 80;
     public int baseAttackDamage = 10;
     public float baseMoveSpeed = 4f;
 
-    [Header("Характеристики при максимальном росте (100%)")]
+    [Header("Characteristics at Full Growth (100% Growth)")]
     public int grownMaxHP = 250;
     public int grownAttackDamage = 50;
     public float grownMoveSpeed = 6f;

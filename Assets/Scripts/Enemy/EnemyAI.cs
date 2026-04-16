@@ -133,7 +133,6 @@ public class EnemyAI : MonoBehaviour
                 TickFlee();
                 break;
             case State.Dead:
-                // nothing
                 break;
         }
     }

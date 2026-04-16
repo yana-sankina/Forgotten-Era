@@ -39,7 +39,6 @@ public class EnemyHitbox : MonoBehaviour
         PlayerHealth player = null;
         if (!other.TryGetComponent<PlayerHealth>(out player))
         {
-            // Часто коллайдер висит на дочернем объекте игрока.
             player = other.GetComponentInParent<PlayerHealth>();
         }
 
